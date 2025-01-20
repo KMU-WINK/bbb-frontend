@@ -1,10 +1,14 @@
 import React from "react";
 import "./SigninPage.css";
+import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
+    const navigate = useNavigate();
+
     const handleSignin = (e) => {
         e.preventDefault();
         console.log("Signin submitted");
+        navigate("/main");
     };
 
     return (
@@ -29,6 +33,6 @@ const SigninPage = () => {
 };
 
 export default SigninPage;
-
+//카카오사진수정
 
 
