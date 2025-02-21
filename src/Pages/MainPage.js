@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header"; // Header 컴포넌트 import
 import "./MainPage.css";
 import { useNavigate } from 'react-router-dom';
+import NavBar from "../components/NavBar";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -22,20 +23,14 @@ const MainPage = () => {
                         </button>
                     </div>
                 </section>
-
-                <section className="recommendations">
-                    <h2>추천 도서, 이건 어때요?</h2>
-                    <div className="category-buttons">
-                        <button className="category-button active">장르소설</button>
-                        <button className="category-button">심리학</button>
-                        <button className="category-button">여행</button>
-                    </div>
-                    <div className="book-cards">
-                        <div className="book-card"></div>
-                        <div className="book-card"></div>
-                        <div className="book-card"></div>
-                    </div>
-                </section>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px'}} >
+                <img 
+            src="/logo.png" 
+            alt="App Logo" 
+            style={{ width: '250px', height: '180px', opacity: 0.3}} // 객체를 중괄호로 감쌈
+            className="logo"
+            /></div>
+            <NavBar />
             </div>
         </div>
     );

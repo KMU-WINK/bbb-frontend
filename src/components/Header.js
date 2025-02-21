@@ -7,12 +7,7 @@ const Header = () => {
 
     return (
         <header className="header-container">
-        <img 
-            src="/logo.png" 
-            alt="App Logo" 
-            style={{ width: '70px', height: '55px' }} // 객체를 중괄호로 감쌈
-            className="logo"
-            />
+        
         <div className="search-bar">   
             <input
             type="text"
@@ -25,6 +20,7 @@ const Header = () => {
             className="search-icon" 
             onClick={() => navigate('/search')} />
         </div>
+        
         </header>
     );
 };
