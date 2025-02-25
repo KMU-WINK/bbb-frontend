@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/Header"; // Header 컴포넌트 import
+import Header from "../../components/Header"; // Header 컴포넌트 import
 import "./MainPage.css";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import NavBar from "../../components/NavBar";
 
 const MainPage = () => {
   const navigate = useNavigate();

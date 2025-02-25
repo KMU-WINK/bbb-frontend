@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import LoadingPage from "./Pages/LoadingPage";
-import SigninPage from "./Pages/SigninPage";
-import SignupPage from "./Pages/SignupPage";
-import MainPage from "./Pages/MainPage";
-import BookshelfPage from "./Pages/BookshelfPage";
-import NotesPage from "./Pages/NotesPage";
+import LoadingPage from "./Pages/loadingPage/LoadingPage";
+import SigninPage from "./Pages/singinPage/SigninPage";
+import SignupPage from "./Pages/singupPage/SignupPage";
+import MainPage from "./Pages/mainPage/MainPage";
+import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
+import NotesPage from "./Pages/notesPage/NotesPage";
 import "./App.css";
 
 function App() {
