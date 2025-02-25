@@ -11,7 +11,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }]
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx", ".tsx"] }]
   },
   "settings": {
     "import/resolver": {
