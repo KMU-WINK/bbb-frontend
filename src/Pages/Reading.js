@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import "./ToRead.css";
+import "./Reading.css";
 
-const ToRead = () => {
+const Reading = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="to-read-wrapper">
+        <div className="reading-wrapper">
             {/* 검색창 */}
             <div className="search-bar">
                 <img src="/images/Logo.svg" alt="로고" className="logo" />
@@ -18,14 +18,14 @@ const ToRead = () => {
 
             {/* 독서 상태 창 */}
             <div className="reading-status-bar">
-                <button className="status-button" onClick={() => navigate('/reading')}>
+                <button className="status-button active" onClick={() => navigate('/reading')}>
                     <div className="status-icon-wrapper" style={{ backgroundColor: '#F7EE46' }}>
                         <img src="/images/ReadingBook.svg" alt="읽는 중" />
                     </div>
                     <span className="status-text">읽는 중</span>
                     <img src="/images/Arrow.svg" alt=">" className="arrow-icon" />
                 </button>
-                <button className="status-button active" onClick={() => navigate('/to-read')}>
+                <button className="status-button" onClick={() => navigate('/to-read')}>
                     <div className="status-icon-wrapper" style={{ backgroundColor: '#F4B6FF' }}>
                         <img src="/images/ToReadBook.svg" alt="읽을 책" />
                     </div>
@@ -73,4 +73,5 @@ const ToRead = () => {
     );
 };
 
-export default ToRead;
+export default Reading;
+

@@ -1,6 +1,6 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
-.to-read-wrapper {
+.reading-wrapper {
     width: 393px;
     height: 758px;
     margin: 0 auto;
@@ -125,20 +125,4 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.nav-button.active {
-    background-color: #D8D3C2;
-}
-
-.nav-button img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 5px;
-}
-
-.nav-button span {
-    color: #2A392A;
-    font-size: 15px;
 }

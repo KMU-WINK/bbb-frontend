@@ -10,6 +10,8 @@ import NotesPage from "./Pages/NotesPage";
 import BookDetail from "./Pages/BookDetail";
 import "./App.css";
 import ToRead from "./Pages/ToRead";
+import Reading from "./Pages/Reading";
+import Read from "./Pages/Read";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/notes" elementt={<NotesPage />} />
         <Route path="/bookdetail" element={<BookDetail />} />
         <Route path="/to-read" element={<ToRead />} />
+        <Route path="/reading" element={<Reading />} />
+        <Route path="/read" element={<Read />} />
       </Routes>
     </Router>
   );

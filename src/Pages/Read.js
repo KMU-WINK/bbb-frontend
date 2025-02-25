@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import "./ToRead.css";
+import "./Read.css";
 
-const ToRead = () => {
+const Read = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="to-read-wrapper">
+        <div className="read-wrapper">
             {/* 검색창 */}
             <div className="search-bar">
                 <img src="/images/Logo.svg" alt="로고" className="logo" />
@@ -25,14 +25,14 @@ const ToRead = () => {
                     <span className="status-text">읽는 중</span>
                     <img src="/images/Arrow.svg" alt=">" className="arrow-icon" />
                 </button>
-                <button className="status-button active" onClick={() => navigate('/to-read')}>
+                <button className="status-button" onClick={() => navigate('/to-read')}>
                     <div className="status-icon-wrapper" style={{ backgroundColor: '#F4B6FF' }}>
                         <img src="/images/ToReadBook.svg" alt="읽을 책" />
                     </div>
                     <span className="status-text">읽을 책</span>
                     <img src="/images/Arrow.svg" alt=">" className="arrow-icon" />
                 </button>
-                <button className="status-button" onClick={() => navigate('/read')}>
+                <button className="status-button active" onClick={() => navigate('/read')}>
                     <div className="status-icon-wrapper" style={{ backgroundColor: '#86CD68' }}>
                         <img src="/images/ReadBook.svg" alt="읽은 책" />
                     </div>
@@ -60,7 +60,7 @@ const ToRead = () => {
                     <img src="/images/HomeIcon.svg" alt="홈" />
                     <span>홈</span>
                 </button>
-                <button className="nav-button active" onClick={() => navigate("/to-read")}>
+                <button className="nav-button active" onClick={() => navigate("/read")}>
                     <img src="/images/BookcaseIcon.svg" alt="책장" />
                     <span>책장</span>
                 </button>
@@ -73,4 +73,4 @@ const ToRead = () => {
     );
 };
 
-export default ToRead;
+export default Read;
