@@ -7,7 +7,6 @@ import SignupPage from "./Pages/signupPage/SignupPage";
 import MainPage from "./Pages/mainPage/MainPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
 import NotesPage from "./Pages/notesPage/NotesPage";
-import SearchPage from "./Pages/searchPage/SearchPage";
 import SearchResults from "./Pages/searchResultsPage/SearchResultsPage";
 import "./App.css";
 
@@ -22,7 +21,6 @@ function App() {
         <Route path="/header" element={<Header />} />
         <Route path="/bookshelf" elemnent={<BookshelfPage />} />
         <Route path="/notes" elementt={<NotesPage />} />
-        <Route path="/search" element={<SearchPage />} />
         <Route path="/searchresults" element={<SearchResults />} />
       </Routes>
     </Router>
