@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import LoadingPage from "./Pages/LoadingPage";
-import SigninPage from "./Pages/SigninPage";
-import SignupPage from "./Pages/SignupPage";
-import MainPage from "./Pages/MainPage";
-import BookshelfPage from "./Pages/BookshelfPage";
-import NotesPage from "./Pages/NotesPage";
+import LoadingPage from "./Pages/loadingPage/LoadingPage";
+import SigninPage from "./Pages/signinPage/SigninPage";
+import SignupPage from "./Pages/signupPage/SignupPage";
+import MainPage from "./Pages/mainPage/MainPage";
+import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
+import NotesPage from "./Pages/notesPage/NotesPage";
+import SearchResults from "./Pages/searchResultsPage/SearchResultsPage";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/header" element={<Header />} />
         <Route path="/bookshelf" elemnent={<BookshelfPage />} />
         <Route path="/notes" elementt={<NotesPage />} />
+        <Route path="/searchresults" element={<SearchResults />} />
       </Routes>
     </Router>
   );
