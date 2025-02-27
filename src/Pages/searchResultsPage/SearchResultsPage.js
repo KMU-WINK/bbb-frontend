@@ -1,18 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import GlobalStyle from "../../GlobalStyle";
 
 const SearchResultsPage = () => {
     const location = useLocation();
-    const query = new URLSearchParams(location.search).get("query");
+    const navigate = useNavigate();
+    const queryParam = new URLSearchParams(location.search).get("query");
 
-    const results = [
-        { id: 1, title: "제목", author: "저자", rating: 5 },
-        { id: 2, title: "제목", author: "저자", rating: 4 },
-        { id: 3, title: "제목", author: "저자", rating: 4.5 },
-    ];
+    const [query, setQuery] = useState(queryParam || "");
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [sortType, setSortType] = useState("rating"); // 기본값: 별점순
+
+    useEffect(() => {
+        if (!queryParam) return;
+
+        const fetchResults = async () => {
+            try {
+                const response = await fetch(`https://your-api.com/search?query=${queryParam}`);
+                const data = await response.json();
+                setResults(data);
+            } catch (error) {
+                console.error("검색 결과 불러오기 실패:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchResults();
+    }, [queryParam]);
+
+    const handleSearchInputChange = (e) => {
+        setQuery(e.target.value);
+    };
+
+    const handleSearchKeyDown = (e) => {
+        if (e.key === "Enter" && query.trim()) {
+            navigate(`/searchresults?query=${query.trim()}`);
+        }
+    };
+
+    const handleSortChange = () => {
+        setSortType((prevSort) => (prevSort === "rating" ? "title" : "rating"));
+    };
+
+    const sortedResults = [...results].sort((a, b) => {
+        if (sortType === "rating") return b.rating - a.rating; // 별점 높은 순
+        if (sortType === "title") return a.title.localeCompare(b.title, "ko-KR"); // 가나다 순
+        return 0;
+    });
 
     return React.createElement(
         Container,
@@ -23,41 +61,52 @@ const SearchResultsPage = () => {
             null,
             React.createElement(SearchInput, {
                 type: "text",
-                value: query || "",
-                readOnly: true,
+                value: query,
+                onChange: handleSearchInputChange,
+                onKeyDown: handleSearchKeyDown,
+                placeholder: "검색어를 입력하세요",
             }),
             React.createElement(SearchIcon, {
                 src: "/searchicon.png",
                 alt: "search Icon",
+                onClick: () => query.trim() && navigate(`/searchresults?query=${query.trim()}`),
             })
         ),
         React.createElement(
             ResultsHeader,
             null,
-            React.createElement("p", null, `'${query}' 검색 결과`),
-            React.createElement(SortButton, null, "별점순 ▼")
+            React.createElement("p", null, `'${queryParam}' 검색 결과`),
+            React.createElement(SortButton, { onClick: handleSortChange }, sortType === "rating" ? "별점순 ▼" : "가나다순 ▼")
         ),
-        React.createElement(
-            ResultsContainer,
-            null,
-            results.map((book) =>
-                React.createElement(
-                    BookItem,
-                    { key: book.id },
-                    React.createElement(BookImage),
-                    React.createElement(
-                        BookInfo,
-                        null,
-                        React.createElement("p", { className: "title" }, book.title),
-                        React.createElement("p", { className: "author" }, book.author),
-                        React.createElement(StarRating, { rating: book.rating })
-                    )
-                )
-            )
-        ),
+        loading
+            ? React.createElement("p", null, "검색 결과 불러오는 중...")
+            : React.createElement(
+                ResultsContainer,
+                null,
+                sortedResults.length > 0
+                    ? sortedResults.map((book) =>
+                            React.createElement(
+                                BookItem,
+                                { key: book.id },
+                                React.createElement(BookImage),
+                                React.createElement(
+                                    BookInfo,
+                                    null,
+                                    React.createElement("p", { className: "title" }, book.title),
+                                    React.createElement("p", { className: "author" }, book.author),
+                                    React.createElement(StarRating, { rating: book.rating })
+                                )
+                            )
+                        )
+                    : React.createElement("p", null, "검색 결과가 없습니다.")
+            ),
         React.createElement(NavBar)
     );
 };
+
+
+
+
 
 const Container = styled.div`
     display: flex;
@@ -68,6 +117,7 @@ const Container = styled.div`
     height: 100vh;
     padding: 20px;
     width: 100%;
+    max-width: 400px;
 `;
 
 const SearchBar = styled.div`
@@ -95,6 +145,7 @@ const SearchIcon = styled.img`
     width: 20px;
     height: 20px;
     cursor: pointer;
+    margin-right: 10px;
 `;
 
 const ResultsHeader = styled.div`
@@ -102,7 +153,7 @@ const ResultsHeader = styled.div`
     justify-content: space-between;
     width: 90%;
     max-width: 400px;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 18px;
     font-weight: bold;
 `;
@@ -114,6 +165,8 @@ const SortButton = styled.button`
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
+    height: 40px;
+    margin-top: 10px;
 `;
 
 const ResultsContainer = styled.div`
