@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import {
-    ReadWrapper,
+    ReadingWrapper,
     SearchBar,
     Logo,
     SearchPlaceholder,
@@ -13,7 +13,7 @@ import {
     BookList,
     BookItem,
     BottomNav,
-    NavButton, ReadingWrapper,
+    NavButton,
 } from "./BookShelfStyled";
 
 const Reading = () => {
