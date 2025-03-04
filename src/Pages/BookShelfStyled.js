@@ -183,7 +183,7 @@ export const ReadingStatusBar = styled.div`
 export const StatusButton = styled.button`
     width: 118px;
     height: 36px;
-    background-color: #F8F5EB;
+    background-color: ${({ active }) => (active ? '#D8D3C2' : '#F8F5EB')};
     border: none;
     display: flex;
     align-items: center;
@@ -191,10 +191,6 @@ export const StatusButton = styled.button`
     padding: 0 8px;
     border-radius: 30px;
     cursor: pointer;
-
-    &.active {
-        background-color: #D8D3C2;
-    }
 `;
 
 export const StatusIconWrapper = styled.div`
