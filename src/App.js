@@ -8,7 +8,7 @@ import MainPage from "./Pages/mainPage/MainPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
 import NotesPage from "./Pages/notesPage/NotesPage";
 import SearchResults from "./Pages/searchResultsPage/SearchResultsPage";
-import SearchPage from "./Pages/searchPage/SearchPage";
+import SearchPage from "./Pages/searchResultsPage/SearchResultsPage";
 import "./App.css";
 
 function App() {
