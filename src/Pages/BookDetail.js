@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
     BookDetailWrapper,
     SearchBar,
@@ -17,88 +17,85 @@ import {
     ButtonText,
     BottomNav,
     NavButton,
-} from './BookShelfStyled'
+} from './BookShelfStyled';
 
 const BookDetail = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const bookId = location.state?.bookId; // SearchPage에서 보낸 bookId 받기
+    const book = location.state?.book; // 📌 SearchPage에서 전달된 책 정보
 
-    const [book, setBook] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    // API 연동으로 책 정보 불러오기
-    useEffect(() => {
-        if (bookId) {
-            fetch(``) // 백엔드 API 주소
-                .then(res => res.json())
-                .then((data) => {
-                    setBook(data);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.error("error", err);
-                    setLoading(false);
-                })
-        }
-    }, [bookId]);
-
-    const handleSearchClick = () => {
-        navigate('/search');
-    };
-
-    const handleWishClick = () => {
-        navigate('/to-read', { state: { book } });
-    };
-
-    const handleRegisterClick = () => {
-        navigate('/reading', { state: { book } });
-    };
-
-    if (loading) {
-        return <div>Loading...</div>;
+    if (!book) {
+        return <div>책 정보를 불러올 수 없습니다.</div>;
     }
+
+    // 📌 책을 DB에 저장 (읽는 중 or 찜 목록)
+    const saveBookToDB = async (endpoint) => {
+        try {
+            // 토큰을 localStorage에서 가져오기 (예시)
+            const token = localStorage.getItem('authToken');
+
+            // axios 요청 시 헤더에 토큰 추가
+            await axios.post(`https://10.223.120.212/${endpoint}`, {
+                bookId: book.id,  // 이미 받은 book 데이터 활용
+                title: book.title,
+                author: book.author,
+                thumbnail: book.thumbnail,
+                contents: book.contents,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 추가
+                },
+            });
+
+            // 저장 후 해당 페이지로 이동
+            if (endpoint === 'reading-books') {
+                navigate('/reading');
+            } else if (endpoint === 'to-read-books') {
+                navigate('/to-read');
+            }
+        } catch (e) {
+            console.error("책 저장 실패", e);
+        }
+    };
 
     return (
         <BookDetailWrapper>
             {/* 검색창 */}
             <SearchBar>
                 <Logo src="/images/Logo.svg" alt="로고" />
-                <SearchPlaceholder onClick={handleSearchClick}>
+                <SearchPlaceholder onClick={() => navigate('/search')}>
                     <span></span>
                     <img src="/images/SearchIcon.svg" alt="검색" className="icon" />
                 </SearchPlaceholder>
             </SearchBar>
 
             {/* 메인 콘텐츠 */}
-            {book && (
-                <BookDetailContainer>
-                    {/* 책 정보 박스 */}
-                    <BookInfoBox>
-                        <BookImage src={book.image} alt={book.title} />
-                        <BookTitle>{book.title}</BookTitle>
-                        <BookAuthor><strong>저자 정보</strong> {book.author}</BookAuthor>
-                        <BookDescription><strong>소개</strong> {book.description}</BookDescription>
-                    </BookInfoBox>
+            <BookDetailContainer>
+                {/* 책 정보 박스 */}
+                <BookInfoBox>
+                    <BookImage src={book.thumbnail} alt={book.title} />
+                    <BookTitle>{book.title}</BookTitle>
+                    <BookAuthor><strong>저자 정보</strong> {book.author}</BookAuthor>
+                    <BookDescription><strong>소개</strong> {book.contents}</BookDescription>
+                </BookInfoBox>
 
-                    {/* 버튼 */}
-                    <ButtonGroup>
-                        <Button onClick={handleWishClick}>
-                            <IconWrapper>
-                                <img src="/images/HeartIcon.svg" alt="찜하기"/>
-                            </IconWrapper>
-                            <ButtonText>책 찜하기</ButtonText>
-                        </Button>
+                {/* 버튼 */}
+                <ButtonGroup>
+                    <Button onClick={() => saveBookToDB('to-read-books')}>
+                        <IconWrapper>
+                            <img src="/images/HeartIcon.svg" alt="찜하기"/>
+                        </IconWrapper>
+                        <ButtonText>책 찜하기</ButtonText>
+                    </Button>
 
-                        <Button onClick={handleRegisterClick}>
-                            <IconWrapper>
-                                <img src="/images/RegisterIcon.svg" alt="등록하기"/>
-                            </IconWrapper>
-                            <ButtonText>책 등록하기</ButtonText>
-                        </Button>
-                    </ButtonGroup>
-                </BookDetailContainer>
-            )}
+                    <Button onClick={() => saveBookToDB('reading-books')}>
+                        <IconWrapper>
+                            <img src="/images/RegisterIcon.svg" alt="등록하기"/>
+                        </IconWrapper>
+                        <ButtonText>책 등록하기</ButtonText>
+                    </Button>
+                </ButtonGroup>
+            </BookDetailContainer>
 
             {/* 하단 네비게이션 */}
             <BottomNav>
@@ -110,7 +107,7 @@ const BookDetail = () => {
                     <img src="/images/BookcaseIcon.svg" alt="책장"/>
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")} className="nav-button">
+                <NavButton onClick={() => navigate("/note")}>
                     <img src="/images/NoteIcon.svg" alt="노트"/>
                     <span>노트</span>
                 </NavButton>

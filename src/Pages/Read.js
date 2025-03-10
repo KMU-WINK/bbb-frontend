@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import {
     ReadWrapper,
@@ -18,6 +18,13 @@ import {
 
 const Read = () => {
     const navigate = useNavigate();
+    const [readBooks, setReadBooks] = useState([]);
+
+    // 📌 localStorage에서 읽은 책 목록 불러오기
+    useEffect(() => {
+        const storedReadBooks = JSON.parse(localStorage.getItem("readBooks")) || [];
+        setReadBooks(storedReadBooks);
+    }, []);
 
     return (
         <ReadWrapper>
@@ -55,17 +62,14 @@ const Read = () => {
                 </StatusButton>
             </ReadingStatusBar>
 
-            {/* 책 목록 */}
+            {/* 읽은 책 목록 */}
             <BookList>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book1.jpg" alt="책 1" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book2.jpg" alt="책 2" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book3.jpg" alt="책 3" />
-                </BookItem>
+                {readBooks.map((book, index) => (
+                    <BookItem key={index} onClick={() => navigate('/note', { state: { book } })}>
+                        <img src={book.image} alt={book.title} />
+                        <p>{book.title}</p>
+                    </BookItem>
+                ))}
             </BookList>
 
             {/* 하단 네비게이션 */}
@@ -88,3 +92,4 @@ const Read = () => {
 };
 
 export default Read;
+

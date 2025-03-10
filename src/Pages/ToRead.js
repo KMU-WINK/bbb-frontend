@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     ToReadWrapper,
     SearchBar,
@@ -18,6 +18,26 @@ import {
 
 const ToRead = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const newBook = location.state?.newBook || null; // 전달받은 책 정보
+    const [books, setBooks] = useState([]);
+
+    // 📌 localStorage에서 기존 목록 불러오기
+    useEffect(() => {
+        const storedBooks = JSON.parse(localStorage.getItem("toReadBooks")) || [];
+        setBooks(storedBooks);
+    }, []);
+
+    // 📌 새 책 추가 및 localStorage 업데이트
+    useEffect(() => {
+        if (newBook) {
+            setBooks(prevBooks => {
+                const updatedBooks = [...prevBooks, newBook];
+                localStorage.setItem("toReadBooks", JSON.stringify(updatedBooks)); // localStorage 저장
+                return updatedBooks;
+            });
+        }
+    }, [newBook]);
 
     return (
         <ToReadWrapper>
@@ -57,28 +77,25 @@ const ToRead = () => {
 
             {/* 책 목록 */}
             <BookList>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book1.jpg" alt="책 1" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book2.jpg" alt="책 2" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book3.jpg" alt="책 3" />
-                </BookItem>
+                {books.map((book, index) => (
+                    <BookItem key={index} onClick={() => navigate('/note')}>
+                        <img src={book.image} alt={book.title} />
+                        <p>{book.title}</p>
+                    </BookItem>
+                ))}
             </BookList>
 
             {/* 하단 네비게이션 */}
             <BottomNav>
-                <NavButton onClick={() => navigate("/")}>
+                <NavButton onClick={() => navigate('/')}>
                     <img src="/images/HomeIcon.svg" alt="홈" />
                     <span>홈</span>
                 </NavButton>
-                <NavButton active={true} onClick={() => navigate("/to-read")}>
+                <NavButton active={true} onClick={() => navigate('/to-read')}>
                     <img src="/images/BookcaseIcon.svg" alt="책장" />
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")}>
+                <NavButton onClick={() => navigate('/note')}>
                     <img src="/images/NoteIcon.svg" alt="노트" />
                     <span>노트</span>
                 </NavButton>
@@ -88,3 +105,4 @@ const ToRead = () => {
 };
 
 export default ToRead;
+

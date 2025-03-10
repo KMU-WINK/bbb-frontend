@@ -1,5 +1,6 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
     ReadingWrapper,
     SearchBar,
@@ -18,6 +19,20 @@ import {
 
 const Reading = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const newBook = location.state?.newBook || null; // 전달받은 책 정보
+    const [readingBooks, setReadingBooks] = useState([]);
+
+    // 📌 DB에서 읽는 중 목록 불러오기
+    useEffect(() => {
+        axios.get('/reading-books') // DB에서 읽는 중 책 목록 불러오기
+            .then(response => {
+                setReadingBooks(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching reading books:", error);
+            });
+    }, []);
 
     return (
         <ReadingWrapper>
@@ -57,28 +72,25 @@ const Reading = () => {
 
             {/* 책 목록 */}
             <BookList>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book1.jpg" alt="책 1" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book2.jpg" alt="책 2" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book3.jpg" alt="책 3" />
-                </BookItem>
+                {readingBooks.map((book, index) => (
+                    <BookItem key={index} onClick={() => navigate('/note')}>
+                        <img src={book.thumbnaile} alt={book.title} />
+                        <p>{book.title}</p>
+                    </BookItem>
+                ))}
             </BookList>
 
             {/* 하단 네비게이션 */}
             <BottomNav>
-                <NavButton onClick={() => navigate("/")}>
+                <NavButton onClick={() => navigate('/')}>
                     <img src="/images/HomeIcon.svg" alt="홈" />
                     <span>홈</span>
                 </NavButton>
-                <NavButton active={true} onClick={() => navigate("/to-read")}>
+                <NavButton active={true} onClick={() => navigate('/to-read')}>
                     <img src="/images/BookcaseIcon.svg" alt="책장" />
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")}>
+                <NavButton onClick={() => navigate('/note')}>
                     <img src="/images/NoteIcon.svg" alt="노트" />
                     <span>노트</span>
                 </NavButton>
@@ -88,4 +100,3 @@ const Reading = () => {
 };
 
 export default Reading;
-
