@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
     ReadingWrapper,
@@ -19,18 +19,29 @@ import {
 
 const Reading = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const newBook = location.state?.newBook || null; // 전달받은 책 정보
     const [readingBooks, setReadingBooks] = useState([]);
 
-    // 📌 DB에서 읽는 중 목록 불러오기
+    // 주어진 토큰
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmIzQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU5OTE3MSwiZXhwIjoxNzQxNjAyNzcxfQ.T_GqACM8y3qM1tj7WcKEsVLBALgWez-BAlUXlcvJxkU";
+
+    // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {
-        axios.get('/reading-books') // DB에서 읽는 중 책 목록 불러오기
+        console.log("📌 useEffect 실행됨!");
+
+        axios.get('http://10.223.120.212:3000/registerlist', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
             .then(response => {
-                setReadingBooks(response.data);
+                console.log("📌 API 응답 데이터:", JSON.stringify(response.data, null, 2));
+
+                // 응답 데이터에서 books 배열을 추출
+                const books = response.data.data || [];  // 📌 "data" 키 안에 있는 배열 가져오기
+                setReadingBooks(books);
+
+                console.log("📌 최종 책 목록:", books);
             })
             .catch(error => {
-                console.error("Error fetching reading books:", error);
+                console.error("❌ API 요청 실패:", error);
             });
     }, []);
 
@@ -72,12 +83,16 @@ const Reading = () => {
 
             {/* 책 목록 */}
             <BookList>
-                {readingBooks.map((book, index) => (
-                    <BookItem key={index} onClick={() => navigate('/note')}>
-                        <img src={book.thumbnaile} alt={book.title} />
-                        <p>{book.title}</p>
-                    </BookItem>
-                ))}
+                {readingBooks.length > 0 ? (
+                    readingBooks.map((book, index) => (
+                        <BookItem key={index} onClick={() => navigate('/note')}>
+                            <img src={book.thumbnail} alt={book.title} />
+                            <p>{book.title}</p>
+                        </BookItem>
+                    ))
+                ) : (
+                    <p>현재 읽는 중인 책이 없습니다.</p>
+                )}
             </BookList>
 
             {/* 하단 네비게이션 */}

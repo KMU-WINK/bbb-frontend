@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     ToReadWrapper,
     SearchBar,
@@ -15,29 +15,36 @@ import {
     BottomNav,
     NavButton,
 } from "./BookShelfStyled";
+import axios from "axios";
 
 const ToRead = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const newBook = location.state?.newBook || null; // 전달받은 책 정보
-    const [books, setBooks] = useState([]);
+    const [toReadBooks, setToReadBooks] = useState([]);
 
-    // 📌 localStorage에서 기존 목록 불러오기
+    // 주어진 토큰
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmIzQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU5OTE3MSwiZXhwIjoxNzQxNjAyNzcxfQ.T_GqACM8y3qM1tj7WcKEsVLBALgWez-BAlUXlcvJxkU";
+
+    // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {
-        const storedBooks = JSON.parse(localStorage.getItem("toReadBooks")) || [];
-        setBooks(storedBooks);
+        console.log("📌 useEffect 실행됨!");
+
+        axios.get('http://10.223.120.212:3000/wishlist', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(response => {
+                console.log("📌 API 응답 데이터:", JSON.stringify(response.data, null, 2));
+
+                // 응답 데이터에서 books 배열을 추출
+                const books = response.data.data || [];  // 📌 "data" 키 안에 있는 배열 가져오기
+                setToReadBooks(books);
+
+                console.log("📌 최종 책 목록:", books);
+            })
+            .catch(error => {
+                console.error("❌ API 요청 실패:", error);
+            });
     }, []);
 
-    // 📌 새 책 추가 및 localStorage 업데이트
-    useEffect(() => {
-        if (newBook) {
-            setBooks(prevBooks => {
-                const updatedBooks = [...prevBooks, newBook];
-                localStorage.setItem("toReadBooks", JSON.stringify(updatedBooks)); // localStorage 저장
-                return updatedBooks;
-            });
-        }
-    }, [newBook]);
 
     return (
         <ToReadWrapper>
@@ -77,12 +84,16 @@ const ToRead = () => {
 
             {/* 책 목록 */}
             <BookList>
-                {books.map((book, index) => (
-                    <BookItem key={index} onClick={() => navigate('/note')}>
-                        <img src={book.image} alt={book.title} />
-                        <p>{book.title}</p>
-                    </BookItem>
-                ))}
+                {toReadBooks.length > 0 ? (
+                    toReadBooks.map((book, index) => (
+                        <BookItem key={index} onClick={() => navigate('/note')}>
+                            <img src={book.thumbnail} alt={book.title} />
+                            <p>{book.title}</p>
+                        </BookItem>
+                    ))
+                ) : (
+                    <p>현재 읽을 책이 없습니다.</p>
+                )}
             </BookList>
 
             {/* 하단 네비게이션 */}

@@ -31,12 +31,12 @@ const BookDetail = () => {
     // 📌 책을 DB에 저장 (읽는 중 or 찜 목록)
     const saveBookToDB = async (endpoint) => {
         try {
-            // 토큰을 localStorage에서 가져오기 (예시)
-            const token = localStorage.getItem('authToken');
+            // 주어진 토큰
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmIzQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU5OTE3MSwiZXhwIjoxNzQxNjAyNzcxfQ.T_GqACM8y3qM1tj7WcKEsVLBALgWez-BAlUXlcvJxkU";
 
             // axios 요청 시 헤더에 토큰 추가
-            await axios.post(`https://10.223.120.212/${endpoint}`, {
-                bookId: book.id,  // 이미 받은 book 데이터 활용
+            await axios.post(`https://10.223.120.212:3000/${endpoint}`, {
+                // bookId: book.id,  // 이미 받은 book 데이터 활용
                 title: book.title,
                 author: book.author,
                 thumbnail: book.thumbnail,
@@ -48,9 +48,9 @@ const BookDetail = () => {
             });
 
             // 저장 후 해당 페이지로 이동
-            if (endpoint === 'reading-books') {
+            if (endpoint === 'registerlist') {
                 navigate('/reading');
-            } else if (endpoint === 'to-read-books') {
+            } else if (endpoint === 'wishlist') {
                 navigate('/to-read');
             }
         } catch (e) {
@@ -81,14 +81,14 @@ const BookDetail = () => {
 
                 {/* 버튼 */}
                 <ButtonGroup>
-                    <Button onClick={() => saveBookToDB('to-read-books')}>
+                    <Button onClick={() => saveBookToDB('registerlist')}>
                         <IconWrapper>
                             <img src="/images/HeartIcon.svg" alt="찜하기"/>
                         </IconWrapper>
                         <ButtonText>책 찜하기</ButtonText>
                     </Button>
 
-                    <Button onClick={() => saveBookToDB('reading-books')}>
+                    <Button onClick={() => saveBookToDB('wishlist')}>
                         <IconWrapper>
                             <img src="/images/RegisterIcon.svg" alt="등록하기"/>
                         </IconWrapper>
