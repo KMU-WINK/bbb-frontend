@@ -22,7 +22,7 @@ const SigninPage = () => {
     }
 
     try {
-      const response = await fetch('https://your-api.com/auth/login', {
+      const response = await fetch('http://10.223.123.253:3000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,10 +31,10 @@ const SigninPage = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
+// 토큰 저장
       if (response.ok && data.success) {
-        // 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('authToken', data.token); // 토큰 저장
+        localStorage.setItem('authToken', data.token); 
         navigate('/main');
       } else {
         setError(data.message || '로그인 실패');
@@ -56,7 +56,7 @@ const SigninPage = () => {
 
     if (code) {
       try {
-        const response = await fetch('https://your-api.com/auth/kakao', {
+        const response = await fetch('http://10.223.123.253:3000/auth/kakao', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

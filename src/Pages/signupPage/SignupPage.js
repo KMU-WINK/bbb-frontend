@@ -24,7 +24,7 @@ const SignupPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/auth/join', {
+      const response = await fetch('http://10.223.123.253:3000/auth/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

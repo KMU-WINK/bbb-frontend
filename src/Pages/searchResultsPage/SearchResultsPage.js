@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import GlobalStyle from "../../GlobalStyle";
+import axios from "axios";
 
 const SearchResultsPage = () => {
     const location = useLocation();
@@ -19,7 +20,7 @@ const SearchResultsPage = () => {
 
         const fetchResults = async () => {
             try {
-                const response = await fetch(`https://your-api.com/search?query=${queryParam}`);
+                const response = await axios.patch(`${process.env.REACT_APP_API_URL}/search?query=${queryParam}`);
                 const data = await response.json();
                 setResults(data);
             } catch (error) {
