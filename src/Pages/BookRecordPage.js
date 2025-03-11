@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Search, Home, BookOpen, FileText } from "lucide-react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -87,32 +87,27 @@ const NavButton = styled.button`
 `;
 
 const BookRecordPage = () => {
-  const [searchText, setSearchText] = useState("");
-  const [bookTitle] = useState("선형대수");
-  const [bookRecord, setBookRecord] = useState("떡볶이 레시피");
+  const [records, setRecords] = useState("");
+  const { bookId, title, updatedAt } = location.state || {};
+  const navigate = useNavigate();
 
-  function searchBook() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let titleElement = document.getElementById("bookTitle");
+  const token = '';
 
-    if (!titleElement) {
-      alert("책 제목을 찾을 수 없습니다.");
-      return;
-    }
-
-    let title = titleElement.textContent.toLowerCase();
-    if (!title.includes(input)) {
-      alert("책을 찾을 수 없습니다.");
-    }
-  }
-
-
-  const editRecord = () => {
-    const newText = prompt("새로운 기록을 입력하세요:", bookRecord);
-    if (newText !== null) {
-      setBookRecord(newText);
-    }
-  };
+  useEffect(() => {
+    axios.get(`http://${process.env.REACT_APP_API_URL}:3000/notes?bookId=${bookId}`, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      const recordList = res.data.data || [];
+      setRecords(recordList);
+    })
+    .catch((err) => {
+      console.error("/notes API 호출 중 에러 발생", err);
+    })
+  }, [])
 
   return (
     <Wrapper>
@@ -125,10 +120,11 @@ const BookRecordPage = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button onClick={searchBook}>
+          <button onClick={searchBook}> 
             <Search />
           </button>
         </SearchBar>
+
 
         {/* 책 정보 카드 */}
         <BookCard>
@@ -143,7 +139,7 @@ const BookRecordPage = () => {
         {/* 책 기록 */}
         <div>
           <h3>책 기록 페이지</h3>
-          <p>{bookRecord}</p>
+          <p>{records[0].content}</p>
         </div>
 
         {/* 수정하기 버튼 */}

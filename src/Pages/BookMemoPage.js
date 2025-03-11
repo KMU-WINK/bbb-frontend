@@ -19,8 +19,6 @@ const BookMemoPage = () => {
     })
     .then((res) => {
       const readBookList = res.data.data || [];
-      console.log(readBookList);
-      console.log(readBookList.map((book) => book.title));
       setMemos(readBookList);
     })
     .catch((err) => {
@@ -48,7 +46,13 @@ const BookMemoPage = () => {
               <MemoContent>
                 <MemoText>{memo.title}</MemoText>
                 <MemoInfo>
-                <EditButton onClick={() => navigate("/book-record")}>
+                <EditButton onClick={() => navigate("/book-record", {
+                  state: {
+                    bookId: memo.id,
+                    title: memo.title,
+                    updatedAt: memo.updatedAt
+                  }
+                })}>
                   <FiEdit2 size={14} />
                 </EditButton>
                 </MemoInfo>
