@@ -9,20 +9,15 @@ const SigninPage = () => {
   const [error, setError] = useState('');
 
   const REST_API_KEY = '05d5094ee72245305bb38c8f2de73ed3';  // 카카오 API 키
-  const REDIRECT_URI = 'http://localhost:3000/auth/kakao/callback';  // 카카오 로그인 리디렉션 URI
+  const REDIRECT_URI = `http://${process.env.REACT_APP_API_URL}:3000/auth/kakao/callback`;  // 카카오 로그인 리디렉션 URI
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   // 이메일 로그인
   const handleSignin = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError('이메일과 비밀번호를 입력해주세요.');
-      return;
-    }
-
     try {
-      const response = await fetch('http://10.223.123.253:3000/auth/login', {
+      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,8 +26,8 @@ const SigninPage = () => {
       });
 
       const data = await response.json();
-      console.log(data);
-// 토큰 저장
+
+      // 토큰 저장
       if (response.ok && data.success) {
         localStorage.setItem('authToken', data.token); 
         navigate('/main');
@@ -56,7 +51,7 @@ const SigninPage = () => {
 
     if (code) {
       try {
-        const response = await fetch('http://10.223.123.253:3000/auth/kakao', {
+        const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/kakao`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
