@@ -6,10 +6,10 @@ import SigninPage from "./Pages/SigninPage";
 import SignupPage from "./Pages/SignupPage";
 import MainPage from "./Pages/MainPage";
 import BookshelfPage from "./Pages/BookshelfPage";
-import NotesPage from "./Pages/NotesPage";
-import "./App.css";
 import BookMemoPage from "./Pages/BookMemoPage";
 import BookRecordPage from "./Pages/BookRecordPage";
+import RecordEditPage from "./Pages/RecordEditPage";
+import "./App.css";
     
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         <Route path="/bookshelf" elemnent={<BookshelfPage />} />
         <Route path="/bookmemo" element={<BookMemoPage />} />
         <Route path="/book-record" element={<BookRecordPage />} />
+        <Route path="/book-record-edit" element={<RecordEditPage />} />
       </Routes>
     </Router>
   );
