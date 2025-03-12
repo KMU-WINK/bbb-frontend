@@ -85,16 +85,14 @@ const Reading = () => {
 
             {/* 책 목록 */}
             <BookList>
-                {readingBooks.length > 0 ? (
+                {readingBooks.length > 0 &&
                     readingBooks.map((book, index) => (
                         <BookItem key={index} onClick={() => navigate('/note')}>
                             <BookShelfImage src={book.thumbnail} alt={book.title} />
                             <BookShelfTitle>{book.title}</BookShelfTitle>
                         </BookItem>
                     ))
-                ) : (
-                    <p>현재 읽는 중인 책이 없습니다.</p>
-                )}
+                }
             </BookList>
 
             {/* 하단 네비게이션 */}

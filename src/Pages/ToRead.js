@@ -14,6 +14,8 @@ import {
     BookItem,
     BottomNav,
     NavButton,
+    BookShelfImage,
+    BookShelfTitle,
 } from "./BookShelfStyled";
 import axios from "axios";
 
@@ -84,16 +86,14 @@ const ToRead = () => {
 
             {/* 책 목록 */}
             <BookList>
-                {toReadBooks.length > 0 ? (
+                {toReadBooks.length > 0 &&
                     toReadBooks.map((book, index) => (
                         <BookItem key={index} onClick={() => navigate('/note')}>
-                            <img src={book.thumbnail} alt={book.title} />
-                            <p>{book.title}</p>
+                            <BookShelfImage src={book.thumbnail} alt={book.title} />
+                            <BookShelfTitle>{book.title}</BookShelfTitle>
                         </BookItem>
                     ))
-                ) : (
-                    <p>현재 읽을 책이 없습니다.</p>
-                )}
+                }
             </BookList>
 
             {/* 하단 네비게이션 */}
