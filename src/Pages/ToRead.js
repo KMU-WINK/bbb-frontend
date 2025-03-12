@@ -88,7 +88,7 @@ const ToRead = () => {
             <BookList>
                 {toReadBooks.length > 0 &&
                     toReadBooks.map((book, index) => (
-                        <BookItem key={index} onClick={() => navigate('/book-record',{
+                        <BookItem key={index} onClick={() => navigate('/book-record-register',{
                             state: {
                                 bookId: book.id,
                                 bookTitle: book.title,

@@ -226,7 +226,7 @@ export const BookList = styled.div`
 `;
 
 export const BookItem = styled.div`
-    width: calc(33.333% - 10px);
+    width: calc(33.333% - 13.333px);
     max-width: 115px;
     height: 180px; /* 📌 전체 높이 고정 */
     background-color: #F8F5EB;

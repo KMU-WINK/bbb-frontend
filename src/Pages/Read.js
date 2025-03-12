@@ -15,6 +15,8 @@ import {
     BookItem,
     BottomNav,
     NavButton,
+    BookShelfImage,
+    BookShelfTitle,
 } from "./BookShelfStyled";
 
 const Read = () => {
@@ -24,23 +26,25 @@ const Read = () => {
     // 주어진 토큰
     const token = "";
 
-    // 읽은 책 목록을 불러오는 useEffect
+    // 📌 DB 읽은 책 목록 불러오기
     useEffect(() => {
-        const fetchReadBooks = async () => {
-            try {
-                // 서버에서 읽은 책 목록을 가져옴
-                const response = await axios.get('http://10.30.119.194:3000/registerlist', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+        console.log("📌 useEffect 실행됨!");
 
-                const books = response.data.data || [];  // "data" 키 안에 있는 배열 가져오기
+        axios.get('http://10.30.119.194:3000/finishlist', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(response => {
+                console.log("📌 API 응답 데이터:", JSON.stringify(response.data, null, 2));
+
+                // 응답 데이터에서 books 배열을 추출
+                const books = response.data.data || [];  // 📌 "data" 키 안에 있는 배열 가져오기
                 setReadBooks(books);
-            } catch (error) {
-                console.error("읽은 책 목록을 가져오는 데 실패했습니다:", error);
-            }
-        };
 
-        fetchReadBooks();
+                console.log("📌 최종 책 목록:", books);
+            })
+            .catch(error => {
+                console.error("❌ API 요청 실패:", error);
+            });
     }, []);
 
     return (
@@ -81,15 +85,19 @@ const Read = () => {
 
             {/* 책 목록 */}
             <BookList>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book1.jpg" alt="책 1" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book2.jpg" alt="책 2" />
-                </BookItem>
-                <BookItem onClick={() => navigate('/note')}>
-                    <img src="/images/Book3.jpg" alt="책 3" />
-                </BookItem>
+                {readBooks.length > 0 &&
+                    readBooks.map((book, index) => (
+                        <BookItem key={index} onClick={() => navigate('/book-record-edit',{
+                            state: {
+                                bookId: book.id,
+                                bookTitle: book.title,
+                                thumbnail: book.thumbnail,
+                            }})}>
+                            <BookShelfImage src={book.thumbnail} alt={book.title} />
+                            <BookShelfTitle>{book.title}</BookShelfTitle>
+                        </BookItem>
+                    ))
+                }
             </BookList>
 
             {/* 하단 네비게이션 */}
