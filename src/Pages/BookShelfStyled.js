@@ -40,7 +40,7 @@ export const SearchPlaceholder = styled.div`
 
 {/* 하단 내비게이션 바 */}
 export const BottomNav = styled.nav`
-    width: 393px;
+    width: 100%;
     height: 60px;
     position: absolute;
     bottom: 0; /* 📌 항상 맨 아래에 위치하도록 설정 */
@@ -76,12 +76,13 @@ export const NavButton = styled.button`
 
 {/* 책 상세 페이지 */}
 export const BookDetailWrapper = styled.div`
-  width: 393px;
-  height: 758px;
-  margin: 0 auto;
-  background-color: #FDFDF8;
-  display: flex;
-  flex-direction: column;
+    width: 393px;
+    height: 758px;
+    margin: 0 auto;
+    background-color: #FDFDF8;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 `;
 
 export const BookDetailContainer = styled.div`
