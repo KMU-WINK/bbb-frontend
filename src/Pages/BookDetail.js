@@ -1,85 +1,132 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './BookDetail.css';
+import { useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {
+    SearchBar,
+    Logo,
+    SearchPlaceholder,
+    BottomNav,
+    NavButton,
+    BookDetailWrapper,
+    BookDetailContainer,
+    BookInfoBox,
+    BookImage,
+    BookTitle,
+    BookAuthor,
+    BookDescription,
+    ButtonGroup,
+    Button,
+    IconWrapper,
+    ButtonText,
+} from './BookShelfStyled';
 
 const BookDetail = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { title, authors, publisher, isbn, thumbnail, content } = location.state || {};
+    const [isRequesting, setIsRequesting] = useState(false);
 
-    const [book, setBook] = useState({
-        id: 1,
-        title: "책 제목 예시",
-        author: "저자 정보 예시",
-        description: "책 소개 예시",
-        image: "/images/book-cover-placeholder.png",
-    });
+    const token = '';
 
-    const handleSearchClick = () => {
-        navigate('/search');
-    };
+    const HandleWish = (e) => {
+        e.preventDefault();
+        if (isRequesting) return;
+        setIsRequesting(true);
+        console.log("찜하기 버튼 클릭됨");  // 디버깅 로그
+        axios.post(`http://${process.env.REACT_APP_API_URL}:3000/wishlist`,
+            { title, authors, publisher, isbn, thumbnail },
+            {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((res) => {
+                console.log(res.data);
+                navigate('/to-read');  // 찜하기 후 /to-read로 이동
+            })
+            .catch((err) => {
+                console.error("POST /wishlist API 요청 중 에러 발생", err);
+            })
+            .finally(() => {
+                setIsRequesting(false);
+            })
+    }
 
-    const handleWishClick = () => {
-        navigate('/to-read', { state: { book } });
-    };
-
-    const handleRegisterClick = () => {
-        navigate('/reading', { state: { book } });
-    };
+    const HandleRegister = (e) => {
+        e.preventDefault();
+        axios.post(`http://${process.env.REACT_APP_API_URL}:3000/registerlist`,
+            { title, authors, publisher, isbn, thumbnail },
+            {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((res) => {
+                console.log(res.data);
+                navigate('/reading');  // 등록하기 후 /reading으로 이동
+            })
+            .catch((err) => {
+                console.error("POST /registerlist API 요청 중 에러 발생", err);
+            })
+    }
 
     return (
-        <div className="book-detail-wrapper">
+        <BookDetailWrapper>
             {/* 검색창 */}
-            <div className="search-bar">
-                <img src="/images/Logo.svg" alt="로고" className="logo" />
-                <div onClick={handleSearchClick} className="search-placeholder">
+            <SearchBar>
+                <Logo src="/images/Logo.svg" alt="로고" />
+                <SearchPlaceholder onClick={() => navigate('/search')}>
                     <span></span>
                     <img src="/images/SearchIcon.svg" alt="검색" className="icon" />
-                </div>
-            </div>
+                </SearchPlaceholder>
+            </SearchBar>
 
             {/* 메인 콘텐츠 */}
-            <div className="book-detail-container">
+            <BookDetailContainer>
                 {/* 책 정보 박스 */}
-                <div className="book-info-box">
-                    <img src={book.image} alt={book.title} className="book-image" />
-                    <h2 className="book-title">{book.title}</h2>
-                    <p className="book-author"><strong>저자 정보</strong> {book.author}</p>
-                    <p className="book-description"><strong>소개</strong> {book.description}</p>
-                </div>
+                <BookInfoBox>
+                    <BookImage src={thumbnail} alt={title} />
+                    <BookTitle>{title}</BookTitle>
+                    <BookAuthor>저자 정보 | {authors}</BookAuthor>
+                    <BookDescription>소개 | {content}</BookDescription>
+                </BookInfoBox>
 
                 {/* 버튼 */}
-                <div className="button-group">
-                    <button className="wishlist-btn" onClick={handleWishClick}>
-                        <div className="icon-wrapper">
-                            <img src="/images/HeartIcon.svg" alt="찜하기" />
-                        </div>
-                        <span className="button-text">책 찜하기</span>
-                    </button>
+                <ButtonGroup>
+                    <Button onClick={HandleWish} disabled={isRequesting}>
+                        <IconWrapper>
+                            <img src="/images/HeartIcon.svg" alt="찜하기"/>
+                        </IconWrapper>
+                        <ButtonText>찜하기</ButtonText>
+                    </Button>
 
-                    <button className="register-btn" onClick={handleRegisterClick}>
-                        <div className="icon-wrapper">
-                            <img src="/images/RegisterIcon.svg" alt="등록하기" />
-                        </div>
-                        <span className="button-text">책 등록하기</span>
-                    </button>
-                </div>
-            </div>
+                    <Button onClick={HandleRegister}>
+                        <IconWrapper>
+                            <img src="/images/RegisterIcon.svg" alt="등록하기"/>
+                        </IconWrapper>
+                        <ButtonText>등록하기</ButtonText>
+                    </Button>
+                </ButtonGroup>
+            </BookDetailContainer>
 
             {/* 하단 네비게이션 */}
-            <nav className="bottom-nav">
-                <button onClick={() => navigate("/")} className="nav-button active">
-                    <img src="/images/HomeIcon.svg" alt="홈" />
+            <BottomNav>
+                <NavButton active={true} onClick={() => navigate("/")}>
+                    <img src="/images/HomeIcon.svg" alt="홈"/>
                     <span>홈</span>
-                </button>
-                <button onClick={() => navigate("/to-read")} className="nav-button">
-                    <img src="/images/BookcaseIcon.svg" alt="책장" />
+                </NavButton>
+                <NavButton onClick={() => navigate("/to-read")}>
+                    <img src="/images/BookcaseIcon.svg" alt="책장"/>
                     <span>책장</span>
-                </button>
-                <button onClick={() => navigate("/note")} className="nav-button">
-                    <img src="/images/NoteIcon.svg" alt="노트" />
+                </NavButton>
+                <NavButton onClick={() => navigate("/note")}>
+                    <img src="/images/NoteIcon.svg" alt="노트"/>
                     <span>노트</span>
-                </button>
-            </nav>
-        </div>
+                </NavButton>
+            </BottomNav>
+        </BookDetailWrapper>
     );
 };
 
