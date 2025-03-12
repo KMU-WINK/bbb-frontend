@@ -32,7 +32,7 @@ const BookDetail = () => {
     const saveBookToDB = async (endpoint) => {
         try {
             // 주어진 토큰
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTY2MjY4MSwiZXhwIjoxNzQxNjY2MjgxfQ.VY-fhVvHBOtkacnHuyN5-752wzrBWOqEhdc_RSYjrAI";
+            const token = "";
 
             // axios 요청 시 헤더에 토큰 추가
             await axios.post(`http://10.221.35.189:3000/${endpoint}`, {
@@ -107,7 +107,7 @@ const BookDetail = () => {
                     <img src="/images/BookcaseIcon.svg" alt="책장"/>
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")}>
+                <NavButton onClick={() => navigate("/bookmemo")}>
                     <img src="/images/NoteIcon.svg" alt="노트"/>
                     <span>노트</span>
                 </NavButton>

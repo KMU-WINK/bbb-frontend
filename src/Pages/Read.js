@@ -24,7 +24,7 @@ const Read = () => {
     const navigate = useNavigate();
 
     // 주어진 토큰
-    const token = "";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc3NTI4OCwiZXhwIjoxNzQxNzc4ODg4fQ.tE6XF7s0vgVao7_vFuToJXu95uojGl91KUHDeatUKV8";
 
     // 📌 DB 읽은 책 목록 불러오기
     useEffect(() => {
@@ -110,7 +110,7 @@ const Read = () => {
                     <img src="/images/BookcaseIcon.svg" alt="책장" />
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")}>
+                <NavButton onClick={() => navigate("/bookmemo")}>
                     <img src="/images/NoteIcon.svg" alt="노트" />
                     <span>노트</span>
                 </NavButton>
