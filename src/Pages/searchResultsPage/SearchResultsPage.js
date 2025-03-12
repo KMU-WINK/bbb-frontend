@@ -75,7 +75,16 @@ const SearchResultsPage = () => {
                 <ResultsContainer>
                     {Array.isArray(sortedResults) && sortedResults.length > 0 ? (
                         sortedResults.map((book) => (
-                            <BookItem key={book.isbn}> {/* isbn이 고유 식별자로 적절해요 */}
+                            <BookItem key={book.isbn} onClick={() => navigate(`/bookdetail`, {
+                                state: {
+                                    title: book.title,
+                                    authors: book.authors,
+                                    publisher: book.publisher,
+                                    isbn: book.isbn,
+                                    thumbnail: book.thumbnail,
+                                    content: book.contents,
+                                }
+                            })}>
                                 <BookImage src={book.thumbnail} alt={book.title} />
                                 <BookInfo>
                                     <p className="title">{book.title}</p>
@@ -156,13 +165,17 @@ const ResultsContainer = styled.div`
     gap: 10px;
 `;
 
-const BookItem = styled.div`
+const BookItem = styled.button`
     display: flex;
     align-items: center;
     background-color: #fff;
     padding: 10px;
+    border: none;
+    outline: none;
     border-radius: 10px;
+    cursor: pointer;
 `;
+
 
 const BookImage = styled.img`
     width: 60px;
@@ -176,15 +189,18 @@ const BookInfo = styled.div`
     margin-left: 10px;
     display: flex;
     flex-direction: column;
+    text-align: left;
 
     .title {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
+        margin: 0;
     }
 
     .authors {
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
+        margin: 0;
     }
 `;
 

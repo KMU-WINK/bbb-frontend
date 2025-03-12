@@ -11,7 +11,7 @@ const NavBar = () => {
       <NavLink to="/bookshelf" className="nav-item">
         책장
       </NavLink>
-      <NavLink to="/notes" className="nav-item">
+      <NavLink to="/bookmemo" className="nav-item">
         노트
       </NavLink>
     </nav>
