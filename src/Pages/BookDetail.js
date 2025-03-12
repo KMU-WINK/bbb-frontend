@@ -32,10 +32,10 @@ const BookDetail = () => {
     const saveBookToDB = async (endpoint) => {
         try {
             // 주어진 토큰
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmIzQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU5OTE3MSwiZXhwIjoxNzQxNjAyNzcxfQ.T_GqACM8y3qM1tj7WcKEsVLBALgWez-BAlUXlcvJxkU";
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTY2MjY4MSwiZXhwIjoxNzQxNjY2MjgxfQ.VY-fhVvHBOtkacnHuyN5-752wzrBWOqEhdc_RSYjrAI";
 
             // axios 요청 시 헤더에 토큰 추가
-            await axios.post(`https://10.223.120.212:3000/${endpoint}`, {
+            await axios.post(`http://10.221.35.189:3000/${endpoint}`, {
                 // bookId: book.id,  // 이미 받은 book 데이터 활용
                 title: book.title,
                 author: book.author,

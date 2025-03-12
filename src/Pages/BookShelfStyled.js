@@ -40,12 +40,15 @@ export const SearchPlaceholder = styled.div`
 
 {/* 하단 내비게이션 바 */}
 export const BottomNav = styled.nav`
-  width: 100%;
-  height: 80px;
-  background-color: #F0EDDE;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0; /* 📌 항상 맨 아래에 위치하도록 설정 */
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 `;
 
 export const NavButton = styled.button`
@@ -214,20 +217,41 @@ export const ArrowIcon = styled.img`
 `;
 
 export const BookList = styled.div`
-    height: 80%;
+    flex: 1;  /* 📌 남은 공간을 최대로 차지하도록 설정 */
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
+    gap: 10px; /* 📌 책 사이 간격 조정 */
 `;
 
 export const BookItem = styled.div`
-    img {
-        width: 100px;
-        height: 150px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        cursor: pointer;
-    }
+    width: calc(33.333% - 10px); /* 3개씩 정렬되도록 설정 */
+    max-width: 115px; /* 최대 크기 제한 */
+    height: 170px;
+    background-color: #F8F5EB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding-top: 10px;
+`;
+
+{/* 책장 책 배경 */}
+export const BookShelfImage = styled.img`
+    width: 90px;
+    height: 115px;
+    object-fit: cover;
+`;
+
+export const BookShelfTitle = styled.div`
+    font-size: 12pt;
+    font-weight: 600; /* Semi Bold */
+    text-align: center;
+    margin-top: 5px;
+    max-width: 90%; /* 텍스트 길면 줄바꿈 */
+    word-wrap: break-word;
 `;
 
 {/* 읽은 책 페이지 */}

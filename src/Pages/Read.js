@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {
     ReadWrapper,
@@ -17,13 +18,29 @@ import {
 } from "./BookShelfStyled";
 
 const Read = () => {
-    const navigate = useNavigate();
     const [readBooks, setReadBooks] = useState([]);
+    const navigate = useNavigate();
 
-    // 📌 localStorage에서 읽은 책 목록 불러오기
+    // 주어진 토큰
+    const token = "";
+
+    // 읽은 책 목록을 불러오는 useEffect
     useEffect(() => {
-        const storedReadBooks = JSON.parse(localStorage.getItem("readBooks")) || [];
-        setReadBooks(storedReadBooks);
+        const fetchReadBooks = async () => {
+            try {
+                // 서버에서 읽은 책 목록을 가져옴
+                const response = await axios.get('http://10.30.119.194:3000/registerlist', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const books = response.data.data || [];  // "data" 키 안에 있는 배열 가져오기
+                setReadBooks(books);
+            } catch (error) {
+                console.error("읽은 책 목록을 가져오는 데 실패했습니다:", error);
+            }
+        };
+
+        fetchReadBooks();
     }, []);
 
     return (
@@ -62,14 +79,17 @@ const Read = () => {
                 </StatusButton>
             </ReadingStatusBar>
 
-            {/* 읽은 책 목록 */}
+            {/* 책 목록 */}
             <BookList>
-                {readBooks.map((book, index) => (
-                    <BookItem key={index} onClick={() => navigate('/note', { state: { book } })}>
-                        <img src={book.image} alt={book.title} />
-                        <p>{book.title}</p>
-                    </BookItem>
-                ))}
+                <BookItem onClick={() => navigate('/note')}>
+                    <img src="/images/Book1.jpg" alt="책 1" />
+                </BookItem>
+                <BookItem onClick={() => navigate('/note')}>
+                    <img src="/images/Book2.jpg" alt="책 2" />
+                </BookItem>
+                <BookItem onClick={() => navigate('/note')}>
+                    <img src="/images/Book3.jpg" alt="책 3" />
+                </BookItem>
             </BookList>
 
             {/* 하단 네비게이션 */}
@@ -92,4 +112,3 @@ const Read = () => {
 };
 
 export default Read;
-

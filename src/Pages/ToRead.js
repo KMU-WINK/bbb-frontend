@@ -22,13 +22,13 @@ const ToRead = () => {
     const [toReadBooks, setToReadBooks] = useState([]);
 
     // 주어진 토큰
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmIzQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU5OTE3MSwiZXhwIjoxNzQxNjAyNzcxfQ.T_GqACM8y3qM1tj7WcKEsVLBALgWez-BAlUXlcvJxkU";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1MzI2OCwiZXhwIjoxNzQxNzU2ODY4fQ.DPE0-aAzLBB25QUK-8zGWAQicSPZn5NyLI9GX8OS6d8";
 
     // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {
         console.log("📌 useEffect 실행됨!");
 
-        axios.get('http://10.223.120.212:3000/wishlist', {
+        axios.get('http://10.30.119.194:3000/wishlist', {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
