@@ -19,7 +19,7 @@ const SearchResultsPage = () => {
 
         const fetchResults = async () => {
             try {
-                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3000/books/search?query=${queryParam}`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}:3000/books/search?query=${queryParam}`, {
                     headers: {
                         'Cache-Control': 'no-cache'
                     }
@@ -204,4 +204,6 @@ const BookInfo = styled.div`
     }
 `;
 
+
 export default SearchResultsPage;
+

@@ -17,7 +17,7 @@ const SigninPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}:3000/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const SigninPage = () => {
 
     if (code) {
       try {
-        const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/kakao`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}:3000/auth/kakao`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -120,3 +120,4 @@ const SigninPage = () => {
 };
 
 export default SigninPage;
+
