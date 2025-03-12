@@ -10,6 +10,7 @@ import NotesPage from "./Pages/notesPage/NotesPage";
 import SearchResults from "./Pages/searchResultsPage/SearchResultsPage";
 import SearchPage from "./Pages/searchPage/SearchPage";
 import "./App.css";
+import BookDetail from "./Pages/bookdetailPage/BookDetail";
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/header" element={<Header />} />
-        <Route path="/bookshelf" element={<BookshelfPage />} />
-        <Route path="/notes" element={<NotesPage />} />
+        <Route path="/bookshelf" elemnent={<BookshelfPage />} />
+        <Route path="/bookdetail" element={<BookDetail />}/>
+        <Route path="/notes" elementt={<NotesPage />} />
         <Route path="/searchresults" element={<SearchResults />} />
         <Route path="/search" element={<SearchPage />} />
       </Routes>
