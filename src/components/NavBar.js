@@ -24,7 +24,7 @@ const NavBar = () => {
       </button>
       <button 
         className={`nav-button ${location.pathname === "/notes" ? "active" : ""}`} 
-        onClick={() => navigate("/notes")}
+        onClick={() => navigate("/bookmemo")}
       >
         <img src="/images/NoteIcon.svg" alt="노트" />
         <span>노트</span>
