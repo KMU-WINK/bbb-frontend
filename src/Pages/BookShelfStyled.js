@@ -217,41 +217,58 @@ export const ArrowIcon = styled.img`
 `;
 
 export const BookList = styled.div`
-    flex: 1;  /* 📌 남은 공간을 최대로 차지하도록 설정 */
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start; /* 📌 왼쪽부터 차례대로 배치 */
     padding: 20px;
-    gap: 10px; /* 📌 책 사이 간격 조정 */
+    gap: 20px; /* 📌 책 사이 간격 유지 */
 `;
 
 export const BookItem = styled.div`
-    width: calc(33.333% - 10px); /* 3개씩 정렬되도록 설정 */
-    max-width: 115px; /* 최대 크기 제한 */
-    height: 170px;
+    width: calc(33.333% - 10px);
+    max-width: 115px;
+    height: 180px; /* 📌 전체 높이 고정 */
     background-color: #F8F5EB;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* 📌 위에서부터 정렬 */
     border-radius: 8px;
     padding-top: 10px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
 `;
 
 {/* 책장 책 배경 */}
 export const BookShelfImage = styled.img`
     width: 90px;
-    height: 115px;
+    height: 120px;
     object-fit: cover;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.3);
+    }
 `;
 
 export const BookShelfTitle = styled.div`
-    font-size: 12pt;
-    font-weight: 600; /* Semi Bold */
+    font-size: 10pt;
+    font-weight: 600;
     text-align: center;
-    margin-top: 5px;
-    max-width: 90%; /* 텍스트 길면 줄바꿈 */
+    margin-top: 10px; /* 📌 이미지와 제목 사이 간격 */
+    max-width: 90%;
     word-wrap: break-word;
+    min-height: 40px; /* 📌 제목 높이를 고정하여 위치 통일 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 {/* 읽은 책 페이지 */}
