@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import GlobalStyle from "../../GlobalStyle";
+import axios from "axios";
 
 const SearchResultsPage = () => {
     const location = useLocation();
@@ -12,16 +13,18 @@ const SearchResultsPage = () => {
     const [query, setQuery] = useState(queryParam || "");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [sortType, setSortType] = useState("rating"); // 기본값: 별점순
 
     useEffect(() => {
         if (!queryParam) return;
 
         const fetchResults = async () => {
             try {
-                const response = await fetch(`https://your-api.com/search?query=${queryParam}`);
-                const data = await response.json();
-                setResults(data);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}:3000/books/search?query=${queryParam}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                setResults(response.data.data.documents);
             } catch (error) {
                 console.error("검색 결과 불러오기 실패:", error);
             } finally {
@@ -42,71 +45,57 @@ const SearchResultsPage = () => {
         }
     };
 
-    const handleSortChange = () => {
-        setSortType((prevSort) => (prevSort === "rating" ? "title" : "rating"));
-    };
-
     const sortedResults = [...results].sort((a, b) => {
-        if (sortType === "rating") return b.rating - a.rating; // 별점 높은 순
-        if (sortType === "title") return a.title.localeCompare(b.title, "ko-KR"); // 가나다 순
-        return 0;
+        return a.title.localeCompare(b.title, "ko-KR");
     });
 
-    return React.createElement(
-        Container,
-        null,
-        React.createElement(GlobalStyle),
-        React.createElement(
-            SearchBar,
-            null,
-            React.createElement(SearchInput, {
-                type: "text",
-                value: query,
-                onChange: handleSearchInputChange,
-                onKeyDown: handleSearchKeyDown,
-                placeholder: "검색어를 입력하세요",
-            }),
-            React.createElement(SearchIcon, {
-                src: "/searchicon.png",
-                alt: "search Icon",
-                onClick: () => query.trim() && navigate(`/searchresults?query=${query.trim()}`),
-            })
-        ),
-        React.createElement(
-            ResultsHeader,
-            null,
-            React.createElement("p", null, `'${queryParam}' 검색 결과`),
-            React.createElement(SortButton, { onClick: handleSortChange }, sortType === "rating" ? "별점순 ▼" : "가나다순 ▼")
-        ),
-        loading
-            ? React.createElement("p", null, "검색 결과 불러오는 중...")
-            : React.createElement(
-                ResultsContainer,
-                null,
-                sortedResults.length > 0
-                    ? sortedResults.map((book) =>
-                            React.createElement(
-                                BookItem,
-                                { key: book.id },
-                                React.createElement(BookImage),
-                                React.createElement(
-                                    BookInfo,
-                                    null,
-                                    React.createElement("p", { className: "title" }, book.title),
-                                    React.createElement("p", { className: "author" }, book.author),
-                                    React.createElement(StarRating, { rating: book.rating })
-                                )
-                            )
-                        )
-                    : React.createElement("p", null, "검색 결과가 없습니다.")
-            ),
-        React.createElement(NavBar)
-    );
+    return (
+        <Container>
+            <GlobalStyle />
+            <SearchBar>
+                <SearchInput
+                    type="text"
+                    value={query}
+                    onChange={handleSearchInputChange}
+                    onKeyDown={handleSearchKeyDown}
+                    placeholder="검색어를 입력하세요"
+                />
+                <SearchIcon
+                    src="/searchicon.png"
+                    alt="search Icon"
+                    onClick={() => query.trim() && navigate(`/searchresults?query=${query.trim()}`)}
+                />
+            </SearchBar>
+            <ResultsHeader>
+                <p>'{queryParam}' 검색 결과</p>
+            </ResultsHeader>
+            {loading ? (
+                <p>검색 결과 불러오는 중...</p>
+            ) : (
+                <ResultsContainer>
+                    {Array.isArray(sortedResults) && sortedResults.length > 0 ? (
+                        sortedResults.map((book) => (
+                            <BookItem key={book.isbn}> {/* isbn이 고유 식별자로 적절해요 */}
+                                <BookImage src={book.thumbnail} alt={book.title} />
+                                <BookInfo>
+                                    <p className="title">{book.title}</p>
+                                    <p className="authors">
+                                        {book.authors && book.authors.length > 0
+                                            ? book.authors.join(', ')
+                                            : '저자 정보 없음'}
+                                    </p>
+                                </BookInfo>
+                            </BookItem>
+                        ))
+                    ) : (
+                        <p>검색 결과가 없습니다.</p>
+                    )}
+                </ResultsContainer>
+            )}
+            <NavBar />
+        </Container>
+    );    
 };
-
-
-
-
 
 const Container = styled.div`
     display: flex;
@@ -158,17 +147,6 @@ const ResultsHeader = styled.div`
     font-weight: bold;
 `;
 
-const SortButton = styled.button`
-    background-color: #fffdfa;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    height: 40px;
-    margin-top: 10px;
-`;
-
 const ResultsContainer = styled.div`
     width: 90%;
     max-width: 400px;
@@ -186,11 +164,12 @@ const BookItem = styled.div`
     border-radius: 10px;
 `;
 
-const BookImage = styled.div`
+const BookImage = styled.img`
     width: 60px;
     height: 80px;
-    background-color: #eee;
     border-radius: 5px;
+    object-fit: cover;
+    background-color: #eee;
 `;
 
 const BookInfo = styled.div`
@@ -203,29 +182,12 @@ const BookInfo = styled.div`
         font-weight: bold;
     }
 
-    .author {
+    .authors {
         font-size: 14px;
         color: #666;
     }
 `;
 
-const StarRating = ({ rating }) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 !== 0;
-
-    return React.createElement(
-        StarContainer,
-        null,
-        [...Array(fullStars)].map((_, i) =>
-            React.createElement("span", { key: i }, "⭐")
-        ),
-        halfStar && React.createElement("span", null, "⭐️")
-    );
-};
-
-const StarContainer = styled.div`
-    color: #ffcc00;
-    font-size: 14px;
-`;
 
 export default SearchResultsPage;
+
