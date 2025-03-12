@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar";
-import GlobalStyle from "../../GlobalStyle";
+import NavBar from "../components/NavBar";
+import GlobalStyle from "../GlobalStyle";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");

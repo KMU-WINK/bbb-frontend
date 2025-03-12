@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar";
-import GlobalStyle from "../../GlobalStyle";
+import NavBar from "../components/NavBar";
+import GlobalStyle from "../GlobalStyle";
 import axios from "axios";
 
 const SearchResultsPage = () => {

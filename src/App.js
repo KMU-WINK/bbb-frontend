@@ -23,7 +23,6 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/header" element={<Header />} />
-        <Route path="/searchresults" element={<SearchResults />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/searchresults" element={<SearchResultsPage />} />
         <Route path="/bookshelf" elemnent={<BookshelfPage />} />
