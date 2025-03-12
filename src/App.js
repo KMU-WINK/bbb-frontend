@@ -15,6 +15,7 @@ import RecordRegisterPage from "./Pages/RecordRegisterPage";
 import BookDetail from "./Pages/BookDetail";
 import Reading from "./Pages/Reading";
 import ToRead from "./Pages/ToRead";
+import Read from "./Pages/Read";
 
     
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="bookdetail" element={<BookDetail />} />
         <Route path="reading" element={<Reading />} />
         <Route path="to-read" element={<ToRead />} />
+        <Route path="read" element={<Read />} />
       </Routes>
     </Router>
   );
