@@ -87,7 +87,12 @@ const Reading = () => {
             <BookList>
                 {readingBooks.length > 0 &&
                     readingBooks.map((book, index) => (
-                        <BookItem key={index} onClick={() => navigate('/note')}>
+                        <BookItem key={index} onClick={() => navigate('/book-record',{
+                            state: {
+                                bookId: book.id,
+                                bookTitle: book.title,
+                                thumbnail: book.thumbnail,
+                        }})}>
                             <BookShelfImage src={book.thumbnail} alt={book.title} />
                             <BookShelfTitle>{book.title}</BookShelfTitle>
                         </BookItem>
