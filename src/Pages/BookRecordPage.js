@@ -19,10 +19,10 @@ import {
 const BookRecordPage = () => {
   const [records, setRecords] = useState("");
   const location = useLocation();
-  const { bookId, title, updatedAt, thumbnail } = location.state || {};
+  const { bookId, title, thumbnail } = location.state || {}; // 책 제목, 책 표지
   const navigate = useNavigate();
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTcxMzE2OSwiZXhwIjoxNzQxNzE2NzY5fQ.bjbADLBiGvKhwsRLQX3A7LIP5tQhaT8qHfEYQqIe6Dk';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1MzI2OCwiZXhwIjoxNzQxNzU2ODY4fQ.DPE0-aAzLBB25QUK-8zGWAQicSPZn5NyLI9GX8OS6d8';
 
   useEffect(() => {
     axios.get(`http://${process.env.REACT_APP_API_URL}:3000/notes?bookId=${bookId}`, {
@@ -56,7 +56,7 @@ const BookRecordPage = () => {
         <BookCover src={thumbnail} alt={`${title}`} />
         <AboutCard>
           <MemoText>책 제목: {title}</MemoText>
-          <MemoText>날짜: {updatedAt}</MemoText>
+          <MemoText>날짜: {records.updatedAt}</MemoText>
         </AboutCard>
       </BookCard>
 
@@ -70,8 +70,8 @@ const BookRecordPage = () => {
         state: {
           bookId: bookId,
           bookTitle: title,
-          recordDate: updatedAt,
           thumbnail: thumbnail,
+          recordDate: records.updatedAt,
           recordTitle: records.title,
           recordContent: records.content,
         }
@@ -87,7 +87,7 @@ const BookRecordPage = () => {
           <img src="/images/BookcaseIcon.svg" alt="책장" />
           <span>책장</span>
         </NavButton>
-        <NavButton active onClick={() => navigate("/note")}>
+        <NavButton active onClick={() => navigate("/bookmemo")}>
           <img src="/images/NoteIcon.svg" alt="노트" />
           <span>노트</span>
         </NavButton>

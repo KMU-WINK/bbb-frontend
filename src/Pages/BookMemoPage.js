@@ -14,7 +14,6 @@ import {
   MemoText,
   MemoInfo,
   MemoEditButton,
-  MemoDate,
   EmptyMessage,
   BottomNav,
   NavButton
@@ -24,7 +23,7 @@ const BookMemoPage = () => {
   const [readBooks, setReadBooks] = useState([]);
   const navigate = useNavigate();
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTcxMzE2OSwiZXhwIjoxNzQxNzE2NzY5fQ.bjbADLBiGvKhwsRLQX3A7LIP5tQhaT8qHfEYQqIe6Dk';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1MzI2OCwiZXhwIjoxNzQxNzU2ODY4fQ.DPE0-aAzLBB25QUK-8zGWAQicSPZn5NyLI9GX8OS6d8';
 
   useEffect(() => {
     axios.get(`http://${process.env.REACT_APP_API_URL}:3000/finishlist`, {
@@ -66,14 +65,12 @@ const BookMemoPage = () => {
                   state: {
                     bookId: book.id,
                     title: book.title,
-                    updatedAt: book.updatedAt,
                     thumbnail: book.thumbnail,
                   }
                 })}>
                   <FiEdit2 size={14} />
                 </MemoEditButton>
                 </MemoInfo>
-                <MemoDate>{book.updatedAt}</MemoDate>
               </MemoContent>
             </MemoItem>
           ))
