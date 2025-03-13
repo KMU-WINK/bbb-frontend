@@ -10,7 +10,7 @@ const NavBar = () => {
     <nav className="bottom-nav">
       <button 
         className={`nav-button ${location.pathname === "/main" ? "active" : ""}`} 
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/main")}
       >
         <img src="/images/HomeIcon.svg" alt="홈" />
         <span>홈</span>

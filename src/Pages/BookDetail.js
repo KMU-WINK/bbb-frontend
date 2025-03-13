@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -17,7 +17,7 @@ import {
     ButtonGroup,
     Button,
     IconWrapper,
-    ButtonText, SearchInput, SearchIcon
+    ButtonText,
 } from './BookShelfStyled';
 
 const BookDetail = () => {
@@ -25,22 +25,15 @@ const BookDetail = () => {
     const location = useLocation();
     const { title, authors, publisher, isbn, thumbnail, content } = location.state || {};
     const [isRequesting, setIsRequesting] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
 
-    const handleSearch = () => {
-        if (searchTerm.trim()) {
-            navigate(`/searchresults?query=${searchTerm}`);
-        }
-    };
-
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTgzNDY4MSwiZXhwIjoxNzQxODM4MjgxfQ.gFCGHfTT1t8JSfxX50kvtFjjuC9WXCL5D_HK1KLwv8s';
+    const token = '';
 
     const HandleWish = (e) => {
         e.preventDefault();
         if (isRequesting) return;
         setIsRequesting(true);
         console.log("찜하기 버튼 클릭됨");  // 디버깅 로그
-        axios.post(`http://10.221.33.147:3000/wishlist`,
+        axios.post(`http://${process.env.REACT_APP_API_URL}:3000/wishlist`,
             { title, authors, publisher, isbn, thumbnail },
             {
                 headers: {
@@ -62,7 +55,7 @@ const BookDetail = () => {
 
     const HandleRegister = (e) => {
         e.preventDefault();
-        axios.post(`http://10.221.33.147:3000/registerlist`,
+        axios.post(`http://${process.env.REACT_APP_API_URL}:3000/registerlist`,
             { title, authors, publisher, isbn, thumbnail },
             {
                 headers: {
@@ -85,26 +78,8 @@ const BookDetail = () => {
             <SearchBar>
                 <Logo src="/images/Logo.svg" alt="로고" />
                 <SearchPlaceholder onClick={() => navigate('/search')}>
-                    <SearchInput
-                      type="text"
-                      placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                              handleSearch();
-                          }
-                      }}
-                    />
-                    <SearchIcon
-                      src="/images/SearchIcon.svg"
-                      alt="검색"
-                      onClick={() => {
-                          if (searchTerm.trim()) {
-                              navigate(`/searchresults?query=${searchTerm}`);
-                          }
-                      }}
-                    />
+                    <span></span>
+                    <img src="/images/SearchIcon.svg" alt="검색" className="icon" />
                 </SearchPlaceholder>
             </SearchBar>
 
@@ -138,7 +113,7 @@ const BookDetail = () => {
 
             {/* 하단 네비게이션 */}
             <BottomNav>
-                <NavButton active={true} onClick={() => navigate("/")}>
+                <NavButton active={true} onClick={() => navigate("/main")}>
                     <img src="/images/HomeIcon.svg" alt="홈"/>
                     <span>홈</span>
                 </NavButton>
@@ -146,7 +121,7 @@ const BookDetail = () => {
                     <img src="/images/BookcaseIcon.svg" alt="책장"/>
                     <span>책장</span>
                 </NavButton>
-                <NavButton onClick={() => navigate("/note")}>
+                <NavButton onClick={() => navigate("/bookmemo")}>
                     <img src="/images/NoteIcon.svg" alt="노트"/>
                     <span>노트</span>
                 </NavButton>
