@@ -52,11 +52,11 @@ const SearchPage = () => {
 
       {/* 하단 네비게이션 */}
       <BottomNav>
-        <NavButton active={true} onClick={() => navigate("/")}>
+        <NavButton active={true} onClick={() => navigate("/main")}>
           <img src="/images/HomeIcon.svg" alt="홈" />
           <span>홈</span>
         </NavButton>
-        <NavButton onClick={() => navigate("/read")}>
+        <NavButton onClick={() => navigate("/to-read")}>
           <img src="/images/BookcaseIcon.svg" alt="책장" />
           <span>책장</span>
         </NavButton>

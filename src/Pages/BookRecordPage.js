@@ -79,7 +79,7 @@ const BookRecordPage = () => {
 
       {/* 하단 네비게이션 바 */}
       <BottomNav>
-        <NavButton onClick={() => navigate("/")}>
+        <NavButton onClick={() => navigate("/main")}>
           <img src="/images/HomeIcon.svg" alt="홈" />
           <span>홈</span>
         </NavButton>
