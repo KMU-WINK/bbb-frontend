@@ -26,10 +26,13 @@ const SigninPage = () => {
       });
 
       const data = await response.json();
+      console.log(data);
 
       // 토큰 저장
       if (response.ok && data.success) {
         localStorage.setItem('token', data.token); 
+        console.log("data.token", data.token);
+        console.log("localStorage.getItem('token'): ", localStorage.getItem('token'));
         navigate('/main');
       } else {
         setError(data.message || '로그인 실패');
@@ -63,7 +66,7 @@ const SigninPage = () => {
 
         if (response.ok && data.token) {
           // 카카오 로그인 성공 시 토큰 저장
-          localStorage.setItem('token', data.token); // 토큰 저장
+          localStorage.setItem('authToken', data.token); // 토큰 저장
           navigate('/main');
         } else {
           setError(data.message || '카카오 로그인 실패');
@@ -120,4 +123,3 @@ const SigninPage = () => {
 };
 
 export default SigninPage;
-
