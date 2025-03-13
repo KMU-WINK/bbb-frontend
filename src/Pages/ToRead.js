@@ -31,7 +31,7 @@ const ToRead = () => {
     };
 
     // 주어진 토큰
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTg0MjgzOSwiZXhwIjoxNzQxODQ2NDM5fQ.P9E5wSQoJW9APbvu5QbSPyGBeo8g9fLO-qKt1Q4gtO0";
+    const token = "";
 
     // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {

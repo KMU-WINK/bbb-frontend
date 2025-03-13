@@ -39,26 +39,31 @@ const BookDetail = () => {
         e.preventDefault();
         if (isRequesting) return;
         setIsRequesting(true);
-        console.log("찜하기 버튼 클릭됨");  // 디버깅 로그
-        axios.post(`http://10.30.113.126:3000/wishlist`,
-            { title, authors, publisher, isbn, thumbnail },
-            {
-                headers: {
-                    'Cache-Control': 'no-cache',
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            .then((res) => {
-                console.log(res.data);
-                navigate('/to-read');  // 찜하기 후 /to-read로 이동
-            })
-            .catch((err) => {
-                console.error("POST /wishlist API 요청 중 에러 발생", err);
-            })
-            .finally(() => {
-                setIsRequesting(false);
-            })
-    }
+
+        const bookData = { title, authors, publisher, isbn, thumbnail };
+
+        axios.post(`http://10.30.113.126:3000/wishlist`, bookData, {
+            headers: {
+                'Cache-Control': 'no-cache',
+                Authorization: `Bearer ${token}`
+            }
+        })
+          .then((res) => {
+              console.log("응답 상태 코드:", res.status);
+              if (res.status === 200) {
+                  console.log("책이 성공적으로 추가되었습니다.");
+                  navigate('/to-read');  // 이동할 페이지
+              } else {
+                  console.error("책 추가 실패: 상태 코드", res.status);
+              }
+          })
+          .catch((err) => {
+              console.error("책 추가 중 에러 발생", err);
+          })
+          .finally(() => {
+              setIsRequesting(false);
+          });
+    };
 
     const HandleRegister = (e) => {
         e.preventDefault();

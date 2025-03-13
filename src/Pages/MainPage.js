@@ -1,66 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from '../components/Header'; // Header 컴포넌트 import
 import './MainPage.css';
-import { useNavigate, useLocation } from 'react-router-dom';
-import NavBar from '../components/NavBar';
+import { useNavigate } from 'react-router-dom';
 import {
-  SearchBar,
-  Logo,
-  SearchIcon,
-  SearchInput,
+  BottomNav,
+  NavButton,
 } from './BookShelfStyled';
+import {
+  BookCover,
+  AboutCard,
+  MemoText,
+} from './BookMemoStyled';
+import axios from 'axios';
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { bookId, title, thumbnail, ReadingDate } = location.state || {};
+  const [readingBook, setReadingBook] = useState(null);
 
-  const readingBooksExist = Boolean(bookId);
+  const token = "";
 
-  // 상태 변수 추가
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // 검색 처리 함수 추가
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      navigate(`/searchresults?query=${searchTerm}`);
-    }
-  };
-
-  const handleKeyDown = (event) => {
-    console.log(event.key);
-    if (event.key === 'Enter' && searchTerm.trim()) {
-      navigate(`/searchresults?query=${searchTerm}`); // 백틱으로 수정
-    }
-  };
-
+  useEffect(() => {
+    axios.get(`http://10.30.113.126:3000/registerlist`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => {
+        const data = res.data.data[0];
+        setReadingBook(data);
+        console.log("메인 화면에 등록된 책 정보", data);
+      })
+      .catch((err) => {
+        console.error("메인 화면에서 등록된 책 정보를 가져오는 과정에서 오류 발생", err);
+      })
+  }, []);
 
   return (
     <div>
-      <SearchBar>
-        <Logo src="/images/Logo.svg" alt="로고" />
-          <SearchInput
-            type="text"
-            placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <SearchIcon
-            src="/images/SearchIcon.svg"
-            alt="검색"
-            onClick={handleSearch}
-          />
-      </SearchBar>
-
       <div className="main-container">
+        <Header /> {/* Header 컴포넌트를 추가 */}
+
+        {/* 등록된 책 정보 표시 */}
         <section className="reading-books">
-          <h2>읽고 있는 책</h2>
-          {readingBooksExist ? (
-            <div>
-              <p>{title}</p>
-              <img src={thumbnail} alt={title} className="book-thumbnail" />
-              <p>{ReadingDate}</p>
-              <button className="start-memo">기록하기</button>
+          <h3 style={{ margin: 0, marginBottom: '10px' }}>읽고 있는 책</h3>
+          {readingBook ? (
+            <div key={readingBook.id} className="book-item">
+              <BookCover src={readingBook.thumbnail} alt={readingBook.title} />
+              <AboutCard>
+                <MemoText>제목 | {readingBook.title}</MemoText>
+                <MemoText>저자 | {readingBook.authors.join(', ')}</MemoText>
+                <MemoText>출판사 | {readingBook.publisher}</MemoText>
+              </AboutCard>
             </div>
           ) : (
             <div>
@@ -76,14 +64,8 @@ const MainPage = () => {
           )}
         </section>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '0px',
-          }}
-        >
+        {/* 로고 */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px' }}>
           <img
             src="/logo.png"
             alt="App Logo"
@@ -92,7 +74,21 @@ const MainPage = () => {
           />
         </div>
 
-        <NavBar />
+        {/* 하단 네비게이션 */}
+        <BottomNav>
+          <NavButton active={true} onClick={() => navigate("/main")}>
+            <img src="/images/HomeIcon.svg" alt="홈"/>
+            <span>홈</span>
+          </NavButton>
+          <NavButton onClick={() => navigate("/reading")}>
+            <img src="/images/BookcaseIcon.svg" alt="책장"/>
+            <span>책장</span>
+          </NavButton>
+          <NavButton onClick={() => navigate("/bookmemo")}>
+            <img src="/images/NoteIcon.svg" alt="노트"/>
+            <span>노트</span>
+          </NavButton>
+        </BottomNav>
       </div>
     </div>
   );

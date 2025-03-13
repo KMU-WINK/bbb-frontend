@@ -11,7 +11,9 @@ body {
 }
 
 .main-container {
-    padding: 20px;
+    height: 100vh;
+    width: 393px;
+    background-color: #FFFDFA;
 }
 
 .reading-books {
@@ -25,7 +27,6 @@ body {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 10px;
-    margin-top:0px;
 }
 
 .reading-books p {
@@ -94,4 +95,8 @@ body {
 
 .logo {
     justify-content: center;
+}
+
+.book-item {
+    display: flex;
 }
