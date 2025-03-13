@@ -66,6 +66,7 @@ const Reading = () => {
         <ReadingWrapper>
             {/* 검색창 */}
             <SearchBar>
+                <SearchPlaceholder>
                 <Logo src="/images/Logo.svg" alt="로고" />
                 <SearchInput
                     type="text"
@@ -79,6 +80,7 @@ const Reading = () => {
                     alt="검색"
                     onClick={handleSearch}
                 />
+                </SearchPlaceholder>
             </SearchBar>
 
             {/* 독서 상태 창 */}

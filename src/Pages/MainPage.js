@@ -7,6 +7,7 @@ import {
   Logo,
   SearchIcon,
   SearchInput,
+  SearchPlaceholder,
 } from './BookShelfStyled';
 
 const MainPage = () => {
@@ -37,6 +38,7 @@ const MainPage = () => {
   return (
     <div>
       <SearchBar>
+        <SearchPlaceholder>
         <Logo src="/images/Logo.svg" alt="로고" />
           <SearchInput
             type="text"
@@ -50,6 +52,7 @@ const MainPage = () => {
             alt="검색"
             onClick={handleSearch}
           />
+          </SearchPlaceholder>
       </SearchBar>
 
       <div className="main-container">
