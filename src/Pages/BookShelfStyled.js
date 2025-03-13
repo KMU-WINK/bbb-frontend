@@ -129,6 +129,8 @@ export const BookAuthor = styled.p`
 `;
 
 export const BookDescription = styled.p`
+  max-height: 150px;  
+  overflow-y: auto;
   font-size: 16px;
   color: #555;
   text-align: left;
@@ -339,12 +341,12 @@ export const ResultsHeader = styled.div`
 `;
 
 export const ResultsContainer = styled.div`
-    width: 90%;
-    max-width: 400px;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    max-height: 500px;  /* 원하는 높이를 설정 */
+    overflow-y: scroll;  /* 세로 스크롤 추가 */
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 `;
 
 export const ResultBookItem = styled.div`

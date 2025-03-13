@@ -31,7 +31,7 @@ const SearchResultsPage = () => {
 
         const fetchResults = async () => {
             try {
-                const response = await axios.get(`http://10.221.33.147:3000/books/search?query=${queryParam}`, {
+                const response = await axios.get(`http://10.30.113.126:3000/books/search?query=${queryParam}`, {
                     headers: { 'Cache-Control': 'no-cache' }
                 });
                 setResults(response.data.data.documents);
@@ -138,4 +138,3 @@ const SearchResultsPage = () => {
     )};
 
 export default SearchResultsPage;
-

@@ -31,13 +31,13 @@ const Reading = () => {
     };
 
     // 주어진 토큰
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTgzNDY4MSwiZXhwIjoxNzQxODM4MjgxfQ.gFCGHfTT1t8JSfxX50kvtFjjuC9WXCL5D_HK1KLwv8s";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTg0MjgzOSwiZXhwIjoxNzQxODQ2NDM5fQ.P9E5wSQoJW9APbvu5QbSPyGBeo8g9fLO-qKt1Q4gtO0";
 
     // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {
         console.log("📌 useEffect 실행됨!");
 
-        axios.get('http://10.221.33.147:3000/registerlist', {
+        axios.get('http://10.30.113.126:3000/registerlist', {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
