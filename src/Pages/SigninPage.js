@@ -17,7 +17,7 @@ const SigninPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}:3000/auth/login`, {
+      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const SigninPage = () => {
 
       // 토큰 저장
       if (response.ok && data.success) {
-        localStorage.setItem('authToken', data.token); 
+        localStorage.setItem('token', data.token); 
         navigate('/main');
       } else {
         setError(data.message || '로그인 실패');
@@ -51,7 +51,7 @@ const SigninPage = () => {
 
     if (code) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}:3000/auth/kakao`, {
+        const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3000/auth/kakao`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const SigninPage = () => {
 
         if (response.ok && data.token) {
           // 카카오 로그인 성공 시 토큰 저장
-          localStorage.setItem('authToken', data.token); // 토큰 저장
+          localStorage.setItem('token', data.token); // 토큰 저장
           navigate('/main');
         } else {
           setError(data.message || '카카오 로그인 실패');

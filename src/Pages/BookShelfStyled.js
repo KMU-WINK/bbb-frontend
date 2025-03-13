@@ -40,7 +40,7 @@ export const SearchPlaceholder = styled.div`
 
 {/* 하단 내비게이션 바 */}
 export const BottomNav = styled.nav`
-    width: 100%;
+    width: 393px;
     height: 60px;
     position: absolute;
     bottom: 0; /* 📌 항상 맨 아래에 위치하도록 설정 */

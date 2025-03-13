@@ -47,7 +47,7 @@ const MainPage = () => {
               <AboutCard>
                 <MemoText>제목 | {readingBook.title}</MemoText>
                 <MemoText>저자 | {readingBook.authors.join(', ')}</MemoText>
-                <MemoText>출판사 | {readingBook.publisher}</MemoText>
+                <MemoText>{readingBook.updatedAt.slice(0, 10)}부터 읽는 중</MemoText>
               </AboutCard>
             </div>
           ) : (
