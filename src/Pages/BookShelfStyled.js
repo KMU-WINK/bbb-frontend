@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #f8f5eb;
-    height: 100vh;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f8f5eb;
+  height: 100vh;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
 `;
 
 {/* 검색창 */}
@@ -317,4 +317,59 @@ export const ToReadWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+`;
+
+export const SearchInput = styled.input`
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    background-color: transparent;
+    color: #666;
+`;
+
+export const SearchIcon = styled.img`
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+`;
+
+export const ResultsHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 400px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+`;
+
+export const ResultsContainer = styled.div`
+    width: 90%;
+    max-width: 400px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
+export const BookInfo = styled.div`
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .title {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .authors {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+    }
 `;

@@ -38,7 +38,7 @@ const BookDetail = () => {
             })
         .then((res) => {
             console.log(res.data);
-            navigate('/bookshlef');
+            navigate('/to-read');
         })
         .catch((err) => {
             console.error("POST /wishlist API 요청 중 에러 발생", err);
@@ -57,7 +57,7 @@ const BookDetail = () => {
             })
         .then((res) => {
             console.log(res.data);
-            navigate('/bookshlef');
+            navigate('/reading');
         })
         .catch((err) => {
             console.error("POST /registerlist API 요청 중 에러 발생", err);
@@ -105,7 +105,7 @@ const BookDetail = () => {
 
             {/* 하단 네비게이션 */}
             <BottomNav>
-                <NavButton active={true} onClick={() => navigate("/")}>
+                <NavButton active={true} onClick={() => navigate("/main")}>
                     <img src="/images/HomeIcon.svg" alt="홈"/>
                     <span>홈</span>
                 </NavButton>

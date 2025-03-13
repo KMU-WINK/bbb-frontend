@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar";
 import GlobalStyle from "../../GlobalStyle";
 import axios from "axios";
+import {
+    BottomNav,
+    NavButton
+} from '../BookShelfStyled'
 
 const SearchResultsPage = () => {
     const location = useLocation();
@@ -101,7 +104,21 @@ const SearchResultsPage = () => {
                     )}
                 </ResultsContainer>
             )}
-            <NavBar />
+            {/* 하단 네비게이션 */}
+            <BottomNav>
+                <NavButton active={true} onClick={() => navigate("/main")}>
+                    <img src="/images/HomeIcon.svg" alt="홈"/>
+                    <span>홈</span>
+                </NavButton>
+                <NavButton onClick={() => navigate("/to-read")}>
+                    <img src="/images/BookcaseIcon.svg" alt="책장"/>
+                    <span>책장</span>
+                </NavButton>
+                <NavButton onClick={() => navigate("/note")}>
+                    <img src="/images/NoteIcon.svg" alt="노트"/>
+                    <span>노트</span>
+                </NavButton>
+            </BottomNav>
         </Container>
     );    
 };
@@ -114,8 +131,7 @@ const Container = styled.div`
     background-color: #f8f5eb;
     height: 100vh;
     padding: 20px;
-    width: 100%;
-    max-width: 400px;
+    width: 353px;
 `;
 
 const SearchBar = styled.div`

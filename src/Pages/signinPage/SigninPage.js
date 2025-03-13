@@ -26,10 +26,13 @@ const SigninPage = () => {
       });
 
       const data = await response.json();
+      console.log(data);
 
       // 토큰 저장
       if (response.ok && data.success) {
-        localStorage.setItem('authToken', data.token); 
+        localStorage.setItem('token', data.token); 
+        console.log("data.token", data.token);
+        console.log("localStorage.getItem('token'): ", localStorage.getItem('token'));
         navigate('/main');
       } else {
         setError(data.message || '로그인 실패');
