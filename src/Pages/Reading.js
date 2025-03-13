@@ -16,21 +16,28 @@ import {
     BottomNav,
     NavButton,
     BookShelfImage,
-    BookShelfTitle,
-} from "./BookShelfStyled";
+    BookShelfTitle, SearchInput, SearchIcon
+} from './BookShelfStyled';
 
 const Reading = () => {
     const navigate = useNavigate();
     const [readingBooks, setReadingBooks] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = () => {
+        if (searchTerm.trim()) {
+            navigate(`/searchresults?query=${searchTerm}`);
+        }
+    };
 
     // 주어진 토큰
-    const token = "";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTgzNDY4MSwiZXhwIjoxNzQxODM4MjgxfQ.gFCGHfTT1t8JSfxX50kvtFjjuC9WXCL5D_HK1KLwv8s";
 
     // 📌 DB 읽는 중 목록 불러오기
     useEffect(() => {
         console.log("📌 useEffect 실행됨!");
 
-        axios.get('http://10.30.119.194:3000/registerlist', {
+        axios.get('http://10.221.33.147:3000/registerlist', {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
@@ -53,8 +60,26 @@ const Reading = () => {
             <SearchBar>
                 <Logo src="/images/Logo.svg" alt="로고" />
                 <SearchPlaceholder onClick={() => navigate('/search')}>
-                    <span></span>
-                    <img src="/images/SearchIcon.svg" alt="검색" className="icon" />
+                    <SearchInput
+                      type="text"
+                      placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                              handleSearch();
+                          }
+                      }}
+                    />
+                    <SearchIcon
+                      src="/images/SearchIcon.svg"
+                      alt="검색"
+                      onClick={() => {
+                          if (searchTerm.trim()) {
+                              navigate(`/searchresults?query=${searchTerm}`);
+                          }
+                      }}
+                    />
                 </SearchPlaceholder>
             </SearchBar>
 

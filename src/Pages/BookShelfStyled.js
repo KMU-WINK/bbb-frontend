@@ -304,3 +304,78 @@ export const ToReadWrapper = styled.div`
     flex-direction: column;
     position: relative;
 `;
+
+{/* 검색창 페이지 */}
+export const SearchInput = styled.input`
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    background-color: transparent;
+    color: #666;
+
+    &::placeholder {
+        color: #bbb;
+    }
+`;
+
+export const SearchIcon = styled.img`
+    width: 24.32px;
+    height: 25px;
+    cursor: pointer;
+`;
+
+{/* 검색 결과 페이지 */}
+export const ResultsHeader = styled.div`
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 400px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+`;
+
+export const ResultsContainer = styled.div`
+    width: 90%;
+    max-width: 400px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
+export const ResultBookItem = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+`;
+
+export const ResultBookImage = styled.img`
+    width: 60px;
+    height: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: #eee;
+`;
+
+export const ResultBookInfo = styled.div`
+    text-align: center;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .authors {
+        font-size: 14px;
+        color: #666;
+    }
+`;
