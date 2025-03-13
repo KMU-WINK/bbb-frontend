@@ -30,7 +30,7 @@ const SigninPage = () => {
       // 토큰 저장
       if (response.ok && data.success) {
         localStorage.setItem('authToken', data.token); 
-        navigate('/main');
+        navigate('/');
       } else {
         setError(data.message || '로그인 실패');
       }
@@ -64,7 +64,7 @@ const SigninPage = () => {
         if (response.ok && data.token) {
           // 카카오 로그인 성공 시 토큰 저장
           localStorage.setItem('authToken', data.token); // 토큰 저장
-          navigate('/main');
+          navigate('/');
         } else {
           setError(data.message || '카카오 로그인 실패');
         }

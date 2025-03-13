@@ -10,14 +10,14 @@ const NavBar = () => {
     <nav className="bottom-nav">
       <button 
         className={`nav-button ${location.pathname === "/main" ? "active" : ""}`} 
-        onClick={() => navigate("/main")}
+        onClick={() => navigate("/")}
       >
         <img src="/images/HomeIcon.svg" alt="홈" />
         <span>홈</span>
       </button>
       <button 
         className={`nav-button ${location.pathname === "/bookshelf" ? "active" : ""}`} 
-        onClick={() => navigate("/bookshelf")}
+        onClick={() => navigate("/reading")}
       >
         <img src="/images/BookcaseIcon.svg" alt="책장" />
         <span>책장</span>
