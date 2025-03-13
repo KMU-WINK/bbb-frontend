@@ -66,8 +66,8 @@ const Read = () => {
     <ReadWrapper>
       {/* 검색창 */}
       <SearchBar>
-        <SearchPlaceholder>
         <Logo src="/images/Logo.svg" alt="로고" />
+          <SearchPlaceholder>
           <SearchInput
             type="text"
             placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
