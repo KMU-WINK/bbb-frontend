@@ -22,6 +22,8 @@ const EditRecordPage = () => {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1NzgyOSwiZXhwIjoxNzQxNzYxNDI5fQ.JyToxRQ6F6m1-0_nfZt4cNBMw3B1f8ZiUojLVtFy_AA';
 
@@ -54,6 +56,12 @@ const EditRecordPage = () => {
     .catch((err) => {
       console.error("Error updating record:", err);
     });
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`);
+    }
   };
 
   const handleKeyDown = (event) => {

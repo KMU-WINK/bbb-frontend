@@ -21,6 +21,7 @@ const BookRecordPage = () => {
   const location = useLocation();
   const { bookId, title, thumbnail } = location.state || {}; // 책 제목, 책 표지
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1NzgyOSwiZXhwIjoxNzQxNzYxNDI5fQ.JyToxRQ6F6m1-0_nfZt4cNBMw3B1f8ZiUojLVtFy_AA';
 
@@ -45,6 +46,12 @@ const BookRecordPage = () => {
       navigate(`/searchresults?query=${searchTerm}`);
     }
   };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`);
+    }
+  };
+
 
   return (
     <Container>
