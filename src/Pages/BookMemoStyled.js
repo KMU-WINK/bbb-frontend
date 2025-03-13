@@ -36,6 +36,7 @@ export const SearchPlaceholder = styled.div`
   margin-left: 8px;
   padding: 0 10px;
   cursor: pointer;
+  border: none;
 
   span {
     color: #888;
