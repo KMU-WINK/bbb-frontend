@@ -97,3 +97,7 @@ body {
 .logo {
     justify-content: center;
 }
+
+.book-item {
+    display: flex;
+}
