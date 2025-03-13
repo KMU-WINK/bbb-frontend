@@ -99,6 +99,7 @@ const RecordRegisterPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
+            style={{ border: "none", outline: "none", background: "transparent" }}
           />
           <img className="icon" src="/searchicon.png" alt="검색 아이콘" onClick={handleSearch} />
         </SearchPlaceholder>

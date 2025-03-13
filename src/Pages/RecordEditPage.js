@@ -24,7 +24,6 @@ const EditRecordPage = () => {
   const [content, setContent] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1NzgyOSwiZXhwIjoxNzQxNzYxNDI5fQ.JyToxRQ6F6m1-0_nfZt4cNBMw3B1f8ZiUojLVtFy_AA';
 
   useEffect(() => {
@@ -82,6 +81,7 @@ const EditRecordPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
+            style={{ border: "none", outline: "none", background: "transparent" }}
           />
           <img className="icon" src="/searchicon.png" alt="검색 아이콘" onClick={handleSearch} />
         </SearchPlaceholder>
