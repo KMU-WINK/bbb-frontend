@@ -21,6 +21,7 @@ import {
 
 const BookMemoPage = () => {
   const [readBooks, setReadBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTc1NzgyOSwiZXhwIjoxNzQxNzYxNDI5fQ.JyToxRQ6F6m1-0_nfZt4cNBMw3B1f8ZiUojLVtFy_AA';
@@ -41,14 +42,32 @@ const BookMemoPage = () => {
     })
   }, []);
 
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`);
+    }
+  };
+
   return (
     <Container>
       {/* 검색바 */}
       <SearchBar>
         <Logo src="/logo.png" alt="로고" />
         <SearchPlaceholder>
-          <span>검색</span>
-          <img className="icon" src="/searchicon.png" alt="검색 아이콘" />
+          <input
+            type="text"
+            placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <img className="icon" src="/searchicon.png" alt="검색 아이콘" onClick={handleSearch} />
         </SearchPlaceholder>
       </SearchBar>
 

@@ -56,14 +56,26 @@ const EditRecordPage = () => {
     });
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`);
+    }
+  };
+
   return (
     <Container>
       {/* 검색 바 */}
       <SearchBar>
         <Logo src="/logo.png" alt="로고" />
         <SearchPlaceholder>
-          <span>검색</span>
-          <img className="icon" src="/searchicon.png" alt="검색 아이콘" />
+          <input
+            type="text"
+            placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <img className="icon" src="/searchicon.png" alt="검색 아이콘" onClick={handleSearch} />
         </SearchPlaceholder>
       </SearchBar>
 
