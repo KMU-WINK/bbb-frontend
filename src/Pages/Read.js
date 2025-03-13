@@ -30,6 +30,14 @@ const Read = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    console.log(event.key);
+    if (event.key === 'Enter' && searchTerm.trim()) {
+      navigate(`/searchresults?query=${searchTerm}`); // 백틱으로 수정
+    }
+  };
+
+
   // 주어진 토큰
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc0BhLmNvbSIsImlhdCI6MTc0MTg0MjgzOSwiZXhwIjoxNzQxODQ2NDM5fQ.P9E5wSQoJW9APbvu5QbSPyGBeo8g9fLO-qKt1Q4gtO0";
 
@@ -59,28 +67,18 @@ const Read = () => {
       {/* 검색창 */}
       <SearchBar>
         <Logo src="/images/Logo.svg" alt="로고" />
-        <SearchPlaceholder onClick={() => navigate('/search')}>
           <SearchInput
             type="text"
             placeholder="도서명, 저자, 출판사, ISBN을 검색해 보세요"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
+            onKeyDown={handleKeyDown}
           />
           <SearchIcon
             src="/images/SearchIcon.svg"
             alt="검색"
-            onClick={() => {
-              if (searchTerm.trim()) {
-                navigate(`/searchresults?query=${searchTerm}`);
-              }
-            }}
+            onClick={handleSearch}
           />
-        </SearchPlaceholder>
       </SearchBar>
 
       {/* 독서 상태 창 */}
