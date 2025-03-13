@@ -31,13 +31,13 @@ const Read = () => {
   };
 
   // 주어진 토큰
-  const token = "";
+  const token = localStorage.getItem('token');
 
   // 📌 DB 읽은 책 목록 불러오기
   useEffect(() => {
     console.log("📌 useEffect 실행됨!");
 
-    axios.get('http://10.30.113.126:3000/finishlist', {
+    axios.get(`http://${process.env.REACT_APP_API_URL}:3000/finishlist`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {

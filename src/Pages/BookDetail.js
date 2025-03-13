@@ -33,7 +33,7 @@ const BookDetail = () => {
         }
     };
 
-    const token = '';
+    const token = localStorage.getItem('token');
 
     const HandleWish = (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ const BookDetail = () => {
 
         const bookData = { title, authors, publisher, isbn, thumbnail };
 
-        axios.post(`http://10.30.113.126:3000/wishlist`, bookData, {
+        axios.post(`http://${process.env.REACT_APP_API_URL}:3000/wishlist`, bookData, {
             headers: {
                 'Cache-Control': 'no-cache',
                 Authorization: `Bearer ${token}`

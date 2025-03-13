@@ -17,10 +17,10 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [readingBook, setReadingBook] = useState(null);
 
-  const token = "";
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    axios.get(`http://10.30.113.126:3000/registerlist`, {
+    axios.get(`http://${process.env.REACT_APP_API_URL}:3000/registerlist`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((res) => {

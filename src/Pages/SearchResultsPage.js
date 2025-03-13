@@ -31,7 +31,7 @@ const SearchResultsPage = () => {
 
         const fetchResults = async () => {
             try {
-                const response = await axios.get(`http://10.30.113.126:3000/books/search?query=${queryParam}`, {
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3000/books/search?query=${queryParam}`, {
                     headers: { 'Cache-Control': 'no-cache' }
                 });
                 setResults(response.data.data.documents);
