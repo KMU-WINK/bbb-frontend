@@ -106,7 +106,7 @@ const Reading = () => {
                     <img src="/images/HomeIcon.svg" alt="홈" />
                     <span>홈</span>
                 </NavButton>
-                <NavButton active={true} onClick={() => navigate('/to-read')}>
+                <NavButton active={true} onClick={() => navigate('/reading')}>
                     <img src="/images/BookcaseIcon.svg" alt="책장" />
                     <span>책장</span>
                 </NavButton>

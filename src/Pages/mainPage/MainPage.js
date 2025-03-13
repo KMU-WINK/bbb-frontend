@@ -41,11 +41,11 @@ const MainPage = () => {
                 <img src="/images/HomeIcon.svg" alt="홈"/>
                 <span>홈</span>
             </NavButton>
-            <NavButton onClick={() => navigate("/to-read")}>
+            <NavButton onClick={() => navigate("/reading")}>
                 <img src="/images/BookcaseIcon.svg" alt="책장"/>
                 <span>책장</span>
             </NavButton>
-            <NavButton onClick={() => navigate("/note")}>
+            <NavButton onClick={() => navigate("/bookmemo")}>
                 <img src="/images/NoteIcon.svg" alt="노트"/>
                 <span>노트</span>
             </NavButton>
